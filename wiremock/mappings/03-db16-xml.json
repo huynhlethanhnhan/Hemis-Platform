@@ -1,0 +1,16 @@
+{
+  "name": "db16 - nop tep XML da ky so (mo phong)",
+  "request": {
+    "method": "POST",
+    "urlPathPattern": "/dongbodulieubeta/v5/co_so_giao_duc_input/db16/.*/.*/.*"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": {
+      "success": true,
+      "message": null,
+      "data": true
+    }
+  }
+}

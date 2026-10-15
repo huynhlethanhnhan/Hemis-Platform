@@ -1,0 +1,44 @@
+# =====================================================================
+# Moi truong phat trien cuc bo cho hemis-platform
+#
+#   docker compose up -d
+#
+# Gom hai dich vu:
+#   - postgres : co so du lieu, cong 5432
+#   - wiremock : MO PHONG API cua Bo, cong 8089
+#
+# WireMock cho phep viet va kiem thu toan bo luong dong bo TRUOC KHI
+# Bo cap tai khoan that. Day la bien phap giam rui ro quan trong nhat
+# cua Giai doan 1 (xem Phuong an ky thuat GD1, muc VI.2).
+# =====================================================================
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: hemis-postgres
+    environment:
+      POSTGRES_DB: hemis
+      POSTGRES_USER: hemis
+      POSTGRES_PASSWORD: hemis
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "5432:5432"
+    volumes:
+      - hemis-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hemis -d hemis"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  wiremock:
+    image: wiremock/wiremock:3.9.1
+    container_name: hemis-wiremock
+    command: ["--global-response-templating", "--verbose"]
+    ports:
+      - "8089:8080"
+    volumes:
+      - ./wiremock:/home/wiremock
+
+volumes:
+  hemis-pgdata:

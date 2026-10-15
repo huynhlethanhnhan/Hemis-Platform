@@ -1,0 +1,36 @@
+{
+  "name": "Lay danh muc dung chung (mo phong getDanhMucHemis)",
+  "request": {
+    "method": "POST",
+    "urlPathPattern": "/danhmucbeta/v5/.*/getDanhMucHemis"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": {
+      "success": true,
+      "message": null,
+      "data": {
+        "DM_GIOI_TINH": [
+          { "Id": "9f1c3f00-0000-0000-0000-000000000001", "Code": null, "MA_GIOI_TINH": "01", "TEN_GIOI_TINH": "Nam", "ISPUBLIC": true, "IsDeleted": false, "Modified": "2026-01-15T08:00:00" },
+          { "Id": "9f1c3f00-0000-0000-0000-000000000002", "Code": null, "MA_GIOI_TINH": "02", "TEN_GIOI_TINH": "Nu", "ISPUBLIC": true, "IsDeleted": false, "Modified": "2026-01-15T08:00:00" }
+        ],
+        "DM_DAN_TOC": [
+          { "Id": "9f1c3f00-0000-0000-0000-000000000055", "Code": null, "MA_DAN_TOC": "55", "TEN_DAN_TOC": "Kinh", "ISPUBLIC": true, "IsDeleted": false, "Modified": "2026-01-15T08:00:00" }
+        ],
+        "DM_QUOC_TICH": [
+          { "Id": "9f1c3f00-0000-0000-0000-000000000704", "Code": null, "MA_QUOC_TICH": "704", "TEN_QUOC_TICH": "Viet Nam", "ISPUBLIC": true, "IsDeleted": false, "Modified": "2026-01-15T08:00:00" }
+        ],
+        "DM_LOAI_HINH_TRUONG": [
+          { "Id": "9f1c3f00-0000-0000-0000-000000000011", "Code": null, "MA_LOAI_HINH_TRUONG": "01", "TEN_LOAI_HINH_TRUONG": "Cong lap", "ISPUBLIC": true, "IsDeleted": false, "Modified": "2026-01-15T08:00:00" }
+        ],
+        "DM_TINH_NEW": [
+          { "Id": "9f1c3f00-0000-0000-0000-000000000079", "Code": null, "MA_TINH_NEW": "79", "TEN_TINH_NEW": "Thanh pho Ho Chi Minh", "ISPUBLIC": true, "IsDeleted": false, "Modified": "2026-07-01T08:00:00" }
+        ],
+        "DM_XA_NEW": [
+          { "Id": "9f1c3f00-0000-0000-0000-000000027004", "Code": null, "MA_XA_NEW": "27004", "TEN_XA_NEW": "Phuong Ban Co", "ISPUBLIC": true, "IsDeleted": false, "Modified": "2026-07-01T08:00:00" }
+        ]
+      }
+    }
+  }
+}

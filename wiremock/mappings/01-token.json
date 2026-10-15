@@ -1,0 +1,17 @@
+{
+  "name": "Lay access token (mo phong /connect/token)",
+  "request": {
+    "method": "POST",
+    "urlPath": "/connect/token"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": {
+      "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.MO_PHONG_KHONG_PHAI_TOKEN_THAT",
+      "expires_in": 900000,
+      "token_type": "Bearer",
+      "scope": "openid profile email"
+    }
+  }
+}

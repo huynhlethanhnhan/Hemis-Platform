@@ -1,0 +1,16 @@
+{
+  "name": "db1..db13 - dong bo than JSON (mo phong)",
+  "request": {
+    "method": "POST",
+    "urlPathPattern": "/dongbodulieubeta/v5/co_so_giao_duc_input/db([0-9]+)/[^/]+/[^/]+$"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": {
+      "success": true,
+      "message": null,
+      "data": {}
+    }
+  }
+}

@@ -1,0 +1,116 @@
+# =====================================================================
+# hemis-platform - Cong tich hop du lieu HEMIS
+# Truong Dai hoc Su pham Thanh pho Ho Chi Minh - Phong Cong nghe thong tin
+#
+# KHONG ghi bi mat (client_secret, mat khau, ma PIN) vao file nay.
+# Dung bien moi truong hoac file .env (xem .env.example).
+# =====================================================================
+spring:
+  application:
+    name: hemis-platform
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/hemis}
+    username: ${DB_USER:hemis}
+    password: ${DB_PASSWORD:hemis}
+    hikari:
+      maximum-pool-size: 10
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate          # Flyway quan ly schema, Hibernate chi kiem tra
+    properties:
+      hibernate:
+        default_schema: hemis_sync
+        jdbc:
+          time_zone: Asia/Ho_Chi_Minh
+
+  flyway:
+    enabled: true
+    schemas: hemis_sync
+    default-schema: hemis_sync
+    create-schemas: true
+    locations: classpath:db/migration
+
+  servlet:
+    multipart:
+      max-file-size: 256MB
+      max-request-size: 256MB
+
+server:
+  port: ${APP_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  level:
+    vn.edu.hcmue.hemis: INFO
+    org.springframework.web.client: INFO
+
+# =====================================================================
+# Cau hinh ket noi HEMIS
+# =====================================================================
+hemis:
+  # Tat ca domain do Cuc Khoa hoc, Cong nghe va Thong tin cap.
+  sso-url: ${HEMIS_SSO_URL:http://localhost:8089}
+  gateway-url: ${HEMIS_GATEWAY_URL:http://localhost:8089}
+
+  # Duong dan tuong doi tren gateway (theo dac ta v2.0)
+  paths:
+    token: /connect/token
+    catalog: /danhmucbeta/v5/DM_BAC_LUONG/getDanhMucHemis
+    xml-upload: /dongbodulieubeta/v5/co_so_giao_duc_input/db16/{donViId}/{iks}/{ph}
+    json-sync: /dongbodulieubeta/v5/co_so_giao_duc_input/{api}/{donViId}/{idKey}
+
+  credentials:
+    client-id: ${HEMIS_CLIENT_ID:password}
+    client-secret: ${HEMIS_CLIENT_SECRET:}
+    username: ${HEMIS_USERNAME:}
+    password: ${HEMIS_PASSWORD:}
+    scope: password
+    grant-type: password
+
+  # Id co so giao duc do Bo cap (Guid 36 ky tu)
+  don-vi-id: ${HEMIS_DON_VI_ID:00000000-0000-0000-0000-000000000000}
+  ma-don-vi: ${HEMIS_MA_DON_VI:}
+  ten-don-vi: ${HEMIS_TEN_DON_VI:Truong Dai hoc Su pham Thanh pho Ho Chi Minh}
+  domain-connect: ${HEMIS_DOMAIN_CONNECT:hemis-dwh.hcmue.edu.vn}
+
+  token:
+    # Lam moi token truoc khi het han bao nhieu giay
+    refresh-margin-seconds: 60
+    # Tran an toan: dac ta ghi expires_in = 900000 nhung thuc te co the la 900.
+    # Khong tin tuyet doi gia tri tra ve; lay min(expires_in, max-lifetime-seconds).
+    max-lifetime-seconds: 900
+
+  http:
+    connect-timeout-seconds: 15
+    read-timeout-seconds: 180
+    max-retries: 3
+    retry-backoff-seconds: 5
+
+  upload:
+    # Nen gzip truoc khi gui db16 (dac ta cho phep)
+    gzip: false
+    # Dac ta ghi "noi dung XML duoc ma hoa duoi dang chuoi JSON string".
+    # Bat cho den khi Cuc KHCN&TT xac nhan - xem docs/01_DAC_TA_API_HEMIS.md, muc "Diem can lam ro".
+    json-string-encoded: false
+
+  signing:
+    # manual  : xuat file XML de nguoi dung ky tren cong HEMIS roi nap lai (du phong)
+    # agent   : tac nhan ky so tren tram ky so keo viec qua API noi bo (chinh thuc GD1)
+    mode: ${HEMIS_SIGNING_MODE:agent}
+    # Thu muc luu goi du lieu: xml chua ky, xml da ky, json, phan hoi
+    storage-dir: ${HEMIS_STORAGE_DIR:./data/hemis-packages}
+    # Tu xac minh lai chu ky truoc khi gui
+    verify-before-send: true
+    # Token dung chung giua tac nhan ky so va cong tich hop
+    agent-token: ${HEMIS_AGENT_TOKEN:doi-gia-tri-nay}
