@@ -3,8 +3,8 @@
 Cổng tích hợp dữ liệu HEMIS — Trường Đại học Sư phạm Thành phố Hồ Chí Minh, Phòng Công nghệ thông tin.
 
 Phần mềm này đẩy dữ liệu của Trường lên Hệ thống cơ sở dữ liệu về giáo dục đại học (HEMIS)
-của Bộ Giáo dục và Đào tạo qua API, theo *Tài liệu đặc tả kỹ thuật tích hợp dữ liệu qua API
-từ cơ sở đào tạo* và *Hướng dẫn sử dụng ký số* của Cục Khoa học, Công nghệ và Thông tin.
+của Bộ Giáo dục và Đào tạo qua API, theo _Tài liệu đặc tả kỹ thuật tích hợp dữ liệu qua API
+từ cơ sở đào tạo_ và _Hướng dẫn sử dụng ký số_ của Cục Khoa học, Công nghệ và Thông tin.
 
 > **Người mới vào nhóm**: đọc [docs/00_LO_TRINH_DOC.md](docs/00_LO_TRINH_DOC.md) trước, đừng đọc mã nguồn ngay.
 
@@ -138,17 +138,17 @@ Chạy `./mvnw test` trước mỗi lần gửi thật.
 
 ## 7. Tình trạng hiện tại
 
-| Thành phần | Trạng thái |
-| --- | --- |
-| Lấy token, tự làm mới | Xong |
-| Tải danh mục dùng chung | Xong (chưa lưu vào bảng `catalog_hemis`) |
-| Sinh XML đúng cấu trúc k1/k2 | Xong, có kiểm thử |
-| Tự xác minh chữ ký XML-DSig | Xong |
-| Hàng đợi ký số + API cho tác nhân | Xong |
-| Gửi db16 và dbN, ghi nhật ký | Xong |
-| Trích xuất COSOGIAODUC | Khung, đọc từ cấu hình — **cần nối với schema `dwh`** |
-| Bộ quy tắc kiểm tra dữ liệu | **Chưa làm** |
-| Tác nhân ký số trên Windows | **Chưa làm** — xem `docs/02_KY_SO_XML_DSIG.md` |
-| Màn hình theo dõi | Mới có API, chưa có giao diện |
+| Thành phần                        | Trạng thái                                            |
+| --------------------------------- | ----------------------------------------------------- |
+| Lấy token, tự làm mới             | Xong                                                  |
+| Tải danh mục dùng chung           | Xong (chưa lưu vào bảng `catalog_hemis`)              |
+| Sinh XML đúng cấu trúc k1/k2      | Xong, có kiểm thử                                     |
+| Tự xác minh chữ ký XML-DSig       | Xong                                                  |
+| Hàng đợi ký số + API cho tác nhân | Xong                                                  |
+| Gửi db16 và dbN, ghi nhật ký      | Xong                                                  |
+| Trích xuất COSOGIAODUC            | Khung, đọc từ cấu hình — **cần nối với schema `dwh`** |
+| Bộ quy tắc kiểm tra dữ liệu       | **Chưa làm**                                          |
+| Tác nhân ký số trên Windows       | **Chưa làm** — xem `docs/02_KY_SO_XML_DSIG.md`        |
+| Màn hình theo dõi                 | Mới có API, chưa có giao diện                         |
 
 Kế hoạch chi tiết: `../plan/PA_Ky_thuat_GD1_Ket_noi_API_HEMIS.docx`
