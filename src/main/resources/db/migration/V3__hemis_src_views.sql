@@ -1,33 +1,38 @@
 -- =====================================================================
--- V3 - Schema hemis_src: LOP HOP DONG giua kho du lieu cu (DWH) va
---      cong tich hop HEMIS.
+-- V3 - Schema hemis_src: LOP HOP DONG doc du lieu tu HEMIS NOI BO
 --
--- NGUYEN TAC QUAN TRONG:
---   Cong tich hop KHONG BAO GIO truy van thang bang cua DWH (public.*).
---   Moi truy cap deu di qua view trong hemis_src.
+-- KIEN TRUC: HAI DATABASE RIENG
 --
--- Vi sao:
---   - DWH do nhom khac phat trien va con thay doi. Neu ma nguon Java truy
---     van thang bang thi moi lan DWH doi ten cot la ung dung vo.
---   - View la hop dong: DWH doi cau truc thi chi sua view, Java khong sua.
---   - Ten cot trong view dat theo DAC TA CUA BO (UPPER_SNAKE), nen doc view
---     la doi chieu duoc ngay voi tai lieu dac ta, khong phai dich hai lan.
+--   Database "hemis_noi_bo"            Database cua hemis-platform
+--   ─────────────────────────          ───────────────────────────
+--   public.*   (253 bang)   ◄── fdw ── hemis_noi_bo.*  (bang ngoai, chi doc)
+--   don vi trong truong nhap                  │
+--   lieu va lam sach o day                    ▼
+--                                      hemis_src.*   (view - HOP DONG)
+--                                             │
+--                                             ▼
+--                                      hemis_sync.*  (vung lam viec)
 --
--- CHAY O DAU:
---   Migration nay tu phat hien co DWH hay khong. Tren may phat trien chi co
---   co so du lieu rong (docker compose), cac view se duoc BO QUA kem mot
---   dong thong bao. Tren may chu co DWH, view duoc tao day du.
+-- Ket noi fdw duoc thiet lap MOT LAN bang db/setup/01_ket_noi_hemis_noi_bo.sql,
+-- khong chay qua Flyway (can superuser va chua mat khau).
+--
+-- NGUYEN TAC: ma nguon Java KHONG BAO GIO truy van hemis_noi_bo.* truc tiep.
+-- Moi truy cap deu qua view trong hemis_src. Doi ben kia chi can sua view.
+--
+-- Migration nay tu phat hien da thiet lap fdw hay chua. Chua co thi bo qua
+-- phan doc tu HEMIS noi bo, khong bao loi - de may phat trien van chay duoc.
 -- =====================================================================
 
 CREATE SCHEMA IF NOT EXISTS hemis_src;
 COMMENT ON SCHEMA hemis_src IS
-  'Lop hop dong doc du lieu tu DWH. Chi chua VIEW, khong chua bang.';
+  'Lop hop dong doc du lieu tu HEMIS noi bo. Chi chua VIEW, khong chua bang.';
 
 -- ---------------------------------------------------------------------
 -- 1. CO SO GIAO DUC (phan he COSOGIAODUC - API db1)
 --
--- Doc tu hemis_sync.co_so_giao_duc vi DWH chua co bang nay (xem V2 muc 1).
--- Khi DWH bo sung public.CoSoGiaoDuc, chi can sua view nay.
+-- Doc tu hemis_sync (CUNG database) vi HEMIS noi bo chua co bang thong tin
+-- chung cua Truong - xem V2 muc 1. Khi ben kia bo sung, sua view nay tro
+-- sang hemis_noi_bo.cosogiaoduc.
 -- ---------------------------------------------------------------------
 CREATE OR REPLACE VIEW hemis_src.v_co_so_giao_duc AS
 SELECT
@@ -68,28 +73,28 @@ SELECT
 FROM hemis_sync.co_so_giao_duc;
 
 COMMENT ON VIEW hemis_src.v_co_so_giao_duc IS
-  'Phan he COSOGIAODUC (db1). Tam doc tu hemis_sync vi DWH chua co bang thong tin chung Truong.';
+  'Phan he COSOGIAODUC (db1). Tam doc tu hemis_sync vi HEMIS noi bo chua co bang thong tin chung Truong.';
 
 -- ---------------------------------------------------------------------
--- 2, 3. Cac view doc tu DWH - chi tao khi DWH ton tai trong cung CSDL
+-- 2, 3. View doc tu HEMIS noi bo qua bang ngoai
+--
+-- LUU Y VE TEN COT: ben HEMIS noi bo cac bang duoc tao khong dat ten trong
+-- ngoac kep (CREATE TABLE CanBo (SoCCCD ...)), nen PostgreSQL ha thanh chu
+-- thuong: canbo, socccd. Viet cb.SoCCCD o day van dung vi cung duoc ha
+-- thanh cb.socccd - giu kieu viet hoa cho de doi chieu voi tai lieu.
 -- ---------------------------------------------------------------------
 DO $$
 BEGIN
-    IF to_regclass('public.CanBo') IS NULL THEN
-        RAISE NOTICE 'Khong tim thay bang public.canbo - BO QUA cac view doc tu DWH. '
-                     'Day la trang thai binh thuong tren may phat trien. '
-                     'Tren may chu, nap DWH roi chay lai: SELECT hemis_src.tao_view_dwh();';
+    IF to_regclass('hemis_noi_bo.canbo') IS NULL THEN
+        RAISE NOTICE E'Chua thiet lap ket noi toi HEMIS noi bo - BO QUA cac view doc tu ben do.\n'
+                     '  Day la trang thai binh thuong tren may phat trien.\n'
+                     '  Tren may chu: chay db/setup/01_ket_noi_hemis_noi_bo.sql roi chay lai V3.';
         RETURN;
     END IF;
 
     -- -----------------------------------------------------------------
     -- 2. DOI NGU (phan he CANBO - API db3)
-    --
-    -- Khoa nghiep vu: SoCCCD. KHONG dung CanBo.ID (SERIAL) vi DWH trien
-    -- khai bang reset_all.sql, ID se doi sau moi lan nap lai.
-    --
-    -- Ten cot cua DWH: Ho, Ten, NgaySinh, SoCCCD, MaCanBo, MaGioiTinh,
-    -- MaQuocTich, MaDanToc, MaTonGiao, MaTinhCuTru, MaXaPhuongCuTru...
+    -- Khoa nghiep vu: SoCCCD. KHONG dung canbo.id (SERIAL) - xem docs/10 muc 3.
     -- -----------------------------------------------------------------
     EXECUTE $v$
     CREATE OR REPLACE VIEW hemis_src.v_can_bo AS
@@ -108,8 +113,8 @@ BEGIN
         cb.MaTonGiao::text                  AS "TON_GIAO_ID",
         cb.MaTinhCuTru::text                AS "HK_TINH_ID",
         cb.MaXaPhuongCuTru::text            AS "HK_XA_ID",
-        NULL::text                          AS "HK_TINH_NEW",   -- TODO: dia gioi moi, chua co trong DWH
-        NULL::text                          AS "HK_XA_NEW",     -- TODO: dia gioi moi, chua co trong DWH
+        NULL::text                          AS "HK_TINH_NEW",   -- TODO SV1-04: dia gioi moi
+        NULL::text                          AS "HK_XA_NEW",     -- TODO SV1-04: dia gioi moi
         cb.MaTrangThaiCanBo::text           AS "TRANG_THAI_CAN_BO_ID",
         cb.MaChucDanhNgheNghiep::text       AS "CHUC_DANH_NGHE_NGHIEP",
         cb.MaChucDanhGiangVien::text        AS "CHUC_DANH_GIANG_VIEN",
@@ -125,16 +130,15 @@ BEGIN
         cb.CreatedAt::date                  AS "Created",
         COALESCE(cb.UpdatedAt, cb.CreatedAt)::date AS "Modified",
         COALESCE(cb.UpdatedAt, cb.CreatedAt)       AS delta_ts,
-        cb.ID                               AS dwh_id
-    FROM public.CanBo cb
+        cb.ID                               AS nguon_id
+    FROM hemis_noi_bo.canbo cb
     $v$;
 
     COMMENT ON VIEW hemis_src.v_can_bo IS
-      'Phan he CANBO (db3) - ho so chinh. business_key = SoCCCD. delta_ts dung cho trich xuat gia tang.';
+      'Phan he CANBO (db3). business_key = SoCCCD. nguon_id chi de truy nguoc, khong dung lam dinh danh gui Bo.';
 
     -- -----------------------------------------------------------------
     -- 3. NGUOI HOC (phan he HOCVIEN - API db7)
-    -- Khoa nghiep vu: SoCCCD (da co rang buoc UNIQUE trong DWH).
     -- -----------------------------------------------------------------
     EXECUTE $v$
     CREATE OR REPLACE VIEW hemis_src.v_nguoi_hoc AS
@@ -153,8 +157,8 @@ BEGIN
         nh.MaLoaiKhuyetTat::text            AS "KHUYET_TAT_ID",
         nh.MaTinhThuongTru::text            AS "TINH_THANH_ID",
         nh.MaXaPhuongThuongTru::text        AS "XA_PHUONG_ID",
-        NULL::text                          AS "TINH_THANH_NEW",  -- TODO: dia gioi moi
-        NULL::text                          AS "XA_PHUONG_NEW",   -- TODO: dia gioi moi
+        NULL::text                          AS "TINH_THANH_NEW",  -- TODO SV1-04
+        NULL::text                          AS "XA_PHUONG_NEW",   -- TODO SV1-04
         nh.NoiSinh                          AS "NOI_SINH",
         nh.QueQuan                          AS "QUE_QUAN",
         nh.NgayVaoDoan                      AS "NGAY_VAO_DOAN",
@@ -163,21 +167,46 @@ BEGIN
         nh.CreatedAt::date                  AS "Created",
         COALESCE(nh.UpdatedAt, nh.CreatedAt)::date AS "Modified",
         COALESCE(nh.UpdatedAt, nh.CreatedAt)       AS delta_ts,
-        nh.ID                               AS dwh_id
-    FROM public.NguoiHoc nh
+        nh.ID                               AS nguon_id
+    FROM hemis_noi_bo.nguoihoc nh
     $v$;
 
     COMMENT ON VIEW hemis_src.v_nguoi_hoc IS
-      'Phan he HOCVIEN (db7) - thong tin hoc vien. business_key = SoCCCD.';
+      'Phan he HOCVIEN (db7). business_key = SoCCCD.';
 
-    RAISE NOTICE 'Da tao cac view hemis_src doc tu DWH.';
+    RAISE NOTICE 'Da tao cac view hemis_src doc tu HEMIS noi bo.';
 END $$;
 
 -- ---------------------------------------------------------------------
--- 4. Ham kiem tra cac truong bat buoc con thieu
+-- 4. Kiem tra suc khoe ket noi toi HEMIS noi bo
 --
--- Dung cho FR-DQ-03 (bao cao khoang trong du lieu). Chay bat ky luc nao,
--- khong can tao dot dong bo.
+-- Goi tu diem kiem tra suc khoe cua ung dung. Tra ve trang thai thay vi
+-- nem loi, de HEMIS noi bo tam dung khong lam sap cong tich hop.
+-- ---------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION hemis_sync.kiem_tra_ket_noi_noi_bo()
+RETURNS TABLE (trang_thai TEXT, chi_tiet TEXT)
+LANGUAGE plpgsql AS $$
+DECLARE
+    n BIGINT;
+BEGIN
+    IF to_regclass('hemis_noi_bo.canbo') IS NULL THEN
+        RETURN QUERY SELECT 'CHUA_THIET_LAP'::TEXT,
+                            'Chua chay db/setup/01_ket_noi_hemis_noi_bo.sql'::TEXT;
+        RETURN;
+    END IF;
+    BEGIN
+        EXECUTE 'SELECT count(*) FROM hemis_noi_bo.canbo' INTO n;
+        RETURN QUERY SELECT 'OK'::TEXT, format('Doc duoc %s dong tu bang can bo', n);
+    EXCEPTION WHEN OTHERS THEN
+        RETURN QUERY SELECT 'LOI'::TEXT, SQLERRM::TEXT;
+    END;
+END $$;
+
+COMMENT ON FUNCTION hemis_sync.kiem_tra_ket_noi_noi_bo() IS
+  'Kiem tra ket noi fdw toi HEMIS noi bo. Dung cho diem kiem tra suc khoe.';
+
+-- ---------------------------------------------------------------------
+-- 5. Khung ham bao cao khoang trong du lieu (FR-DQ-03)
 -- ---------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION hemis_sync.kiem_tra_khoang_trong(p_ph VARCHAR)
 RETURNS TABLE (

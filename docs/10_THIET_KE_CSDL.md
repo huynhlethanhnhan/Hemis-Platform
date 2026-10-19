@@ -5,11 +5,11 @@ Tài liệu này giải thích **vì sao** thiết kế như vậy. Cấu trúc 
 
 ---
 
-## 1. Hiện trạng kho dữ liệu cũ (HEMIS-DWH-Database)
+## 1. Hiện trạng HEMIS nội bộ (database `hemis_noi_bo`, mã nguồn HEMIS-DWH-Database)
 
 | Đặc điểm | Thực tế | Hệ quả với thiết kế |
 | --- | --- | --- |
-| Schema | Tất cả nằm trong `public`, không tách schema | Cổng tích hợp phải dùng schema riêng để không lẫn |
+| Vị trí | Là một **database riêng** (`hemis_noi_bo`), toàn bộ bảng trong schema `public` | Phải kết nối liên database, không truy vấn chéo schema được |
 | Đặt tên | Bảng và cột PascalCase tiếng Việt: `CanBo.SoCCCD`, `NguoiHoc.HoVaTen` | Phải đổi sang tên trường theo đặc tả của Bộ |
 | Khóa chính | `ID SERIAL` ở toàn bộ 253 bảng | **Không dùng làm khóa gửi HEMIS** — xem mục 3 |
 | Cột thời gian | `CreatedAt TIMESTAMP`, `UpdatedAt TIMESTAMP NULL` ở toàn bộ bảng | Trích xuất gia tăng được, nhưng phải xử lý `NULL` — xem mục 5 |
@@ -34,7 +34,7 @@ chọn làm **thí điểm của Giai đoạn 1**. Không có dữ liệu này t
 
 | | Phương án A — bổ sung vào kho dữ liệu | Phương án B — đặt tạm ở `hemis_sync` |
 | --- | --- | --- |
-| Cách làm | Nhóm DWH tạo `public.CoSoGiaoDuc` | Cổng tích hợp tự quản lý bảng `hemis_sync.co_so_giao_duc` |
+| Cách làm | Nhóm HEMIS nội bộ tạo bảng `CoSoGiaoDuc` bên database của họ | Cổng tích hợp tự quản lý bảng `hemis_sync.co_so_giao_duc` |
 | Đúng về kiến trúc | Có — đây là dữ liệu nghiệp vụ | Không — dữ liệu nghiệp vụ nằm ngoài kho |
 | Thời gian | Phụ thuộc nhóm khác, chưa chắc kịp | Làm ngay |
 | Rủi ro | Chậm tiến độ Giai đoạn 1 | Nợ kỹ thuật |
@@ -82,31 +82,74 @@ không được đổi.
 
 ---
 
-## 4. Ba schema, ba vai trò
+## 4. Hai database, ba schema
+
+**HEMIS nội bộ và `hemis-platform` là hai database riêng biệt.** Đây là ranh giới quan trọng
+nhất của thiết kế: một bên là nơi các đơn vị nhập và làm sạch dữ liệu, một bên là nơi đóng gói
+và gửi lên Bộ. Hai việc có vòng đời, quyền truy cập và mức rủi ro khác nhau.
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│  public          KHO DU LIEU HIEN CO (DWH)                   │
-│                  253 bang, nhom khac phat trien              │
-│                  Cong tich hop CHI DOC, khong ghi            │
-└────────────────────────────┬─────────────────────────────────┘
-                             │  (chi doc)
-┌────────────────────────────▼─────────────────────────────────┐
-│  hemis_src       LOP HOP DONG - CHI CHUA VIEW                │
-│                  v_co_so_giao_duc, v_can_bo, v_nguoi_hoc     │
-│                  Ten cot = ten truong theo dac ta cua Bo     │
-└────────────────────────────┬─────────────────────────────────┘
-                             │
-┌────────────────────────────▼─────────────────────────────────┐
-│  hemis_sync      VUNG LAM VIEC CUA CONG TICH HOP             │
-│                  entity_map, catalog_*, sync_*, data_group_* │
-│                  co_so_giao_duc (tam)                        │
-└──────────────────────────────────────────────────────────────┘
+   DATABASE "hemis_noi_bo"                DATABASE cua hemis-platform
+   ───────────────────────                ───────────────────────────
+
+   public.*                               hemis_noi_bo.*
+   253 bang nghiep vu      ◄── fdw ────   bang ngoai, CHI DOC
+   Don vi trong truong                    (tao boi db/setup/01_...)
+   nhap lieu, lam sach                            │
+   Nhom DWH phat trien                            ▼
+                                          hemis_src.*
+                                          LOP HOP DONG - chi chua VIEW
+                                          Ten cot = ten truong cua Bo
+                                                   │
+                                                   ▼
+                                          hemis_sync.*
+                                          entity_map, catalog_*, sync_*,
+                                          data_group_*, co_so_giao_duc
 ```
+
+| Database | Ai sở hữu | Ghi được? | Chứa gì |
+| --- | --- | --- | --- |
+| `hemis_noi_bo` | Nhóm phát triển HEMIS nội bộ | Các đơn vị trong Trường ghi | 253 bảng nghiệp vụ |
+| `hemis-platform` | Phòng Công nghệ thông tin | Chỉ cổng tích hợp ghi | Vùng làm việc đồng bộ |
+
+### Vì sao tách hai database
+
+| | Nếu chung một database | Tách hai database (chọn) |
+| --- | --- | --- |
+| Quyền | Cổng tích hợp có quyền trên cùng database người dùng đang ghi | Cổng tích hợp chỉ có tài khoản **chỉ đọc** sang bên kia |
+| Sự cố | Nhập liệu nặng làm chậm cả việc đồng bộ | Hai bên độc lập |
+| Triển khai | Phải đồng bộ lịch nâng cấp của hai nhóm | Mỗi bên nâng cấp riêng |
+| Bảo mật dữ liệu cá nhân | Toàn bộ dữ liệu cá nhân nằm chung chỗ với tệp gửi đi | Giới hạn được phạm vi truy cập |
+| Nhược điểm | — | Phải thiết lập kết nối liên database, truy vấn chậm hơn |
+
+### Kết nối giữa hai database
+
+Dùng `postgres_fdw` — trình kết nối cơ sở dữ liệu ngoài có sẵn của PostgreSQL. Bảng bên
+HEMIS nội bộ hiện ra như bảng thường trong schema `hemis_noi_bo`, nhưng chỉ đọc.
+
+Thiết lập **một lần** bằng `db/setup/01_ket_noi_hemis_noi_bo.sql`, **không** chạy qua Flyway vì:
+
+- cần quyền `superuser` để tạo extension;
+- chứa mật khẩu kết nối, không được đưa vào kho mã nguồn;
+- địa chỉ máy chủ khác nhau ở mỗi môi trường.
+
+Phía HEMIS nội bộ tạo một tài khoản riêng `hemis_reader` **chỉ có quyền SELECT**. Cổng tích
+hợp không bao giờ ghi sang bên đó.
+
+### Phương án thay thế nếu không dùng được `postgres_fdw`
+
+| Phương án | Khi nào dùng | Đánh đổi |
+| --- | --- | --- |
+| `postgres_fdw` (chọn) | Hai database thông mạng, được bật extension | Truy vấn qua mạng chậm hơn; HEMIS nội bộ dừng thì view lỗi |
+| Nguồn dữ liệu thứ hai trong ứng dụng | Không được bật extension | Phải viết thêm mã sao chép; `hemis_src` thành bảng tạm thay vì view |
+| Nhân bản logic (logical replication) | Dữ liệu lớn, cần đọc nhiều | Phải cấu hình bên HEMIS nội bộ; trễ vài giây |
+| Xuất tệp định kỳ | Hai bên không thông mạng | Rời rạc nhất, khó bảo đảm đúng hạn |
+
+Cả bốn phương án đều **giữ nguyên lớp `hemis_src`**, nên đổi phương án không phải sửa mã Java.
 
 ### Vì sao phải có `hemis_src` thay vì truy vấn thẳng bảng
 
-| Nếu truy vấn thẳng `public.CanBo` | Nếu qua `hemis_src.v_can_bo` |
+| Nếu truy vấn thẳng `hemis_noi_bo.canbo` | Nếu qua `hemis_src.v_can_bo` |
 | --- | --- |
 | Nhóm DWH đổi tên cột → ứng dụng Java vỡ, phải sửa và biên dịch lại | Chỉ sửa view, Java không đụng tới |
 | Tên cột tiếng Việt lẫn trong mã Java, khó đối chiếu với đặc tả | Tên cột đã là tên trường của Bộ, đọc view là đối chiếu được ngay |
@@ -114,13 +157,16 @@ không được đổi.
 | Khó kiểm thử nếu không có kho dữ liệu | Thay view bằng view giả là chạy được |
 
 **Quy tắc bắt buộc của nhóm**: không có câu lệnh SQL nào trong mã Java được nhắc tới
-`public.` — nếu thấy, trả lại khi rà soát mã.
+`hemis_noi_bo.` — nếu thấy, trả lại khi rà soát mã. Chỉ `hemis_src.*` được phép.
 
 ### Xử lý khi máy phát triển không có kho dữ liệu
 
-Migration `V3` tự kiểm tra bằng `to_regclass('public.CanBo')`. Không thấy thì bỏ qua các
-view đọc từ DWH và in một dòng thông báo — không báo lỗi. Nhờ vậy sinh viên chạy
-`docker compose up` trên máy cá nhân vẫn khởi động được ứng dụng.
+Migration `V3` tự kiểm tra bằng `to_regclass('hemis_noi_bo.canbo')`. Chưa thiết lập kết nối
+thì bỏ qua các view đọc từ HEMIS nội bộ và in một dòng thông báo — không báo lỗi. Nhờ vậy
+sinh viên chạy `docker compose up` trên máy cá nhân vẫn khởi động được ứng dụng.
+
+Hàm `hemis_sync.kiem_tra_ket_noi_noi_bo()` cho biết kết nối đang ở trạng thái nào; gắn vào
+điểm kiểm tra sức khỏe để HEMIS nội bộ tạm dừng không làm sập cổng tích hợp.
 
 ---
 
@@ -203,5 +249,5 @@ RÀNG BUỘC-09 trong [08_SRS.md](08_SRS.md).
 | View cho 9 phân hệ còn lại | Giai đoạn 1 chỉ thí điểm 1 phân hệ | Theo tiến độ từng phân hệ |
 | Hàm `kiem_tra_khoang_trong` | Mới là khung, cần `validation_rule` đầy đủ trước | Nhiệm vụ SV2-03 |
 | Ảnh chụp dữ liệu theo kỳ | Tệp `payload.json` đã lưu, đủ làm minh chứng cho Giai đoạn 1 | Giai đoạn 2 |
-| Kho dữ liệu ở máy chủ riêng | Hiện cùng một máy chủ | Khi tách máy chủ: dùng `postgres_fdw` hoặc bản sao chỉ đọc, view giữ nguyên |
+| Nhân bản dữ liệu về cục bộ | `postgres_fdw` đọc trực tiếp đủ dùng ở quy mô hiện nay | Khi phân hệ người học chạy thật, nếu chậm thì chuyển sang nhân bản logic |
 | Chỉ mục phục vụ delta | Dữ liệu còn nhỏ | Khi phân hệ người học chạy thật |
