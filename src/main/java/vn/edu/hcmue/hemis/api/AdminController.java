@@ -55,16 +55,18 @@ public class AdminController {
                 "trichYeu", token.substring(0, Math.min(24, token.length())) + "...");
     }
 
-    /** Tai danh muc dung chung va tra ve so luong danh muc nhan duoc. */
+    /** Tai danh muc dung chung, luu vao catalog_hemis, tra ve so luong. */
     @PostMapping("/danh-muc/tai-ve")
     public Map<String, Object> taiDanhMuc() {
-        var res = catalog.fetchAll();
+        var result = catalog.fetchAndStore();
+        var res = result.response();
         List<String> tenDanhMuc = res.data() == null
                 ? List.of()
                 : res.data().propertyNames().stream().sorted().limit(20).toList();
         return Map.of(
                 "success", res.success(),
                 "soDanhMuc", res.data() == null ? 0 : res.data().size(),
+                "soBanGhiLuu", result.saved(),
                 "tenDanhMucDauTien", tenDanhMuc);
     }
 
