@@ -162,13 +162,18 @@ chế nào bảo đảm các phân hệ cùng phản ánh một thời điểm. 
 
 | Điểm mạnh | Điểm yếu |
 | --- | --- |
-| 13 module, 99 bảng nghiệp vụ, 154 bảng danh mục, mô hình hóa theo chuẩn HEMIS | Thiếu bảng thông tin chung của Trường (xem [10_THIET_KE_CSDL.md](10_THIET_KE_CSDL.md) mục 2) |
-| Có `CreatedAt`/`UpdatedAt` trên toàn bộ 253 bảng | `UpdatedAt` cho phép NULL — bẫy khi lấy delta |
-| Bảng `CanBo` có 86 cột, nhiều hơn 62 cột Excel yêu cầu | Chưa có `DM_TINH_NEW`, `DM_XA_NEW` (địa giới mới) |
+| 13 module, 100 bảng nghiệp vụ sau bổ sung, 156 bảng danh mục sau bổ sung, mô hình hóa theo chuẩn HEMIS | Bảng thông tin chung và schema địa giới mới đã có; dữ liệu `DM_TinhNew`/`DM_XaNew` vẫn cần nạp/đối chiếu từ nguồn chính thức |
+| Có `CreatedAt`/`UpdatedAt` trên toàn bộ 253 bảng hiện hữu; bảng bổ sung dùng `TIMESTAMPTZ` | `UpdatedAt` của bảng cũ cho phép NULL — bẫy khi lấy delta |
+| Bảng `CanBo` có 86 cột, nhiều hơn 62 cột Excel yêu cầu | Dữ liệu địa giới mới cần quy trình nạp và đối chiếu mã trước khi gửi |
 | Mã danh mục phần lớn trùng mã HEMIS | Khóa `SERIAL`, triển khai bằng `reset_all.sql` |
 | 297 hàm, 99 view | Chưa có cơ chế duyệt, phân quyền theo đơn vị |
 
 **Kết luận**: schema đủ dùng, không cần làm lại. Cần bổ sung chứ không cần thay thế.
+
+**Cập nhật schema ngày 21/10/2026:** đã bổ sung các thành phần còn thiếu đã được chốt trong
+docs 10–11: bảng thông tin chung `CoSoGiaoDuc`, hai danh mục địa giới mới
+`DM_TinhNew`/`DM_XaNew`, cùng các cột dùng chung `IsDeleted`, `DeletedAt` và `IsPublic`
+theo đúng phạm vi từng nhóm bảng. Các cột và bảng hiện hữu không bị đổi kiểu hoặc xóa.
 
 ### 6.2 HEMIS-DWH-Backend
 

@@ -3,6 +3,8 @@
 -- Khong dung chung voi schema nghiep vu (dwh) de co the trien khai doc lap.
 -- =====================================================================
 
+CREATE SCHEMA IF NOT EXISTS hemis_sync;
+SET search_path = hemis_sync, public;
 -- ---------------------------------------------------------------------
 -- 1. entity_map: anh xa khoa noi bo -> dinh danh GUID gui cho HEMIS
 --    GUID sinh MOT LAN va giu co dinh, de HEMIS cap nhat dung ban ghi

@@ -11,7 +11,7 @@ Tài liệu này giải thích **vì sao** thiết kế như vậy. Cấu trúc 
 | --- | --- | --- |
 | Vị trí | Là một **database riêng** (`hemis_noi_bo`), toàn bộ bảng trong schema `public` | Phải kết nối liên database, không truy vấn chéo schema được |
 | Đặt tên | Bảng và cột PascalCase tiếng Việt: `CanBo.SoCCCD`, `NguoiHoc.HoVaTen` | Phải đổi sang tên trường theo đặc tả của Bộ |
-| Khóa chính | `ID SERIAL` ở toàn bộ 253 bảng | **Không dùng làm khóa gửi HEMIS** — xem mục 3 |
+| Khóa chính | `ID SERIAL` ở 253 bảng nghiệp vụ/danh mục hiện hữu; các bảng bổ sung dùng `BIGSERIAL` khi cần | **Không dùng làm khóa gửi HEMIS** — xem mục 3 |
 | Cột thời gian | `CreatedAt TIMESTAMP`, `UpdatedAt TIMESTAMP NULL` ở toàn bộ bảng | Trích xuất gia tăng được, nhưng phải xử lý `NULL` — xem mục 5 |
 | Mã danh mục | `DM_GioiTinh.Ma = '01'`, `DM_DanToc.Ma = 55` — trùng mã HEMIS | Ánh xạ theo ngoại lệ, không khai báo từng mã — xem mục 6 |
 | Kiểu mã danh mục | Không nhất quán: `VARCHAR(2)`, `VARCHAR(10)`, `INT` | View phải ép về `text` |
@@ -22,29 +22,25 @@ Tài liệu này giải thích **vì sao** thiết kế như vậy. Cấu trúc 
 
 ## 2. Vấn đề phát hiện: thiếu bảng thông tin chung của Trường
 
-Module `co_so_giao_duc` của kho dữ liệu có 13 bảng con — `BanGiamHieu`, `HoiDongTruong`,
+Module `co_so_giao_duc` của kho dữ liệu có 13 bảng con và bảng thông tin chung bổ sung — `BanGiamHieu`, `HoiDongTruong`,
 `VanBanTuChu`, `ThongTinKiemDinh_CSGD`, `LichSuDoiTenTruong`… — nhưng **không có bảng nào
 lưu thông tin chung của chính Trường**: `MA_DON_VI`, `TEN_DON_VI`, `WEBSITE`,
 `SO_QD_THANH_LAP`, `LOAI_HINH_ID`, `TINH_THANH_NEW`, `MA_DINH_DANH_ND69`…
 
+**Cập nhật schema ngày 21/10/2026:** bảng `CoSoGiaoDuc` đã được bổ sung vào kho dữ liệu
+PostgreSQL với khóa nghiệp vụ `MaDonVi`; vì vậy phần thiếu bảng thông tin chung không còn
+là blocker của schema. `hemis_sync.co_so_giao_duc` vẫn được giữ để tương thích dữ liệu
+chuyển tiếp của platform và chỉ được dùng theo contract migration tương ứng.
+
 Đây chính là nội dung bắt buộc của mảng `_CO_SO_GIAO_DUC` trong API `db1` — phân hệ được
-chọn làm **thí điểm của Giai đoạn 1**. Không có dữ liệu này thì không chạy được thí điểm.
+chọn làm **thí điểm của Giai đoạn 1**. Nguồn dữ liệu nghiệp vụ chuẩn hiện là
+`public.cosogiaoduc`, khóa nghiệp vụ `MaDonVi` và có thể lưu một bản ghi cho mỗi đơn vị.
 
-**Hai phương án:**
-
-| | Phương án A — bổ sung vào kho dữ liệu | Phương án B — đặt tạm ở `hemis_sync` |
-| --- | --- | --- |
-| Cách làm | Nhóm HEMIS nội bộ tạo bảng `CoSoGiaoDuc` bên database của họ | Cổng tích hợp tự quản lý bảng `hemis_sync.co_so_giao_duc` |
-| Đúng về kiến trúc | Có — đây là dữ liệu nghiệp vụ | Không — dữ liệu nghiệp vụ nằm ngoài kho |
-| Thời gian | Phụ thuộc nhóm khác, chưa chắc kịp | Làm ngay |
-| Rủi ro | Chậm tiến độ Giai đoạn 1 | Nợ kỹ thuật |
-
-**Chọn phương án B**, có điều kiện: ghi nhận là nợ kỹ thuật, khi kho dữ liệu bổ sung bảng
-thì chỉ cần sửa view `hemis_src.v_co_so_giao_duc`, mã nguồn Java không đổi. Đồng thời gửi
-đề nghị bổ sung cho nhóm DWH ngay trong tuần này.
-
-Bảng chỉ có **đúng một dòng** (ràng buộc `CHECK (id = 1)`), nhập một lần, do Phòng Tổ chức –
-Hành chính cung cấp số liệu.
+`hemis_sync.co_so_giao_duc` vẫn được giữ ở database tích hợp để phục vụ dữ liệu chuyển tiếp
+và kiểm thử độc lập. Bảng staging này có ràng buộc một dòng (`id = 1`) theo contract bàn giao
+Giai đoạn 1; nó không thay thế bảng nguồn `public.cosogiaoduc`. Khi cấu hình đọc qua FDW,
+`hemis_src.v_co_so_giao_duc` phải đọc nguồn DWH hoặc lớp view tương thích, còn fallback
+staging chỉ dùng khi chưa có kết nối nguồn.
 
 ---
 
@@ -109,7 +105,7 @@ và gửi lên Bộ. Hai việc có vòng đời, quyền truy cập và mức r
 
 | Database | Ai sở hữu | Ghi được? | Chứa gì |
 | --- | --- | --- | --- |
-| `hemis_noi_bo` | Nhóm phát triển HEMIS nội bộ | Các đơn vị trong Trường ghi | 253 bảng nghiệp vụ |
+| `hemis_noi_bo` | Nhóm phát triển HEMIS nội bộ | Các đơn vị trong Trường ghi | 253 bảng nghiệp vụ hiện hữu + bảng bổ sung theo migration |
 | `hemis-platform` | Phòng Công nghệ thông tin | Chỉ cổng tích hợp ghi | Vùng làm việc đồng bộ |
 
 ### Vì sao tách hai database

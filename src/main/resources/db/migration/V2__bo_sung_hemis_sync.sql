@@ -1,3 +1,6 @@
+CREATE SCHEMA IF NOT EXISTS hemis_sync;
+SET search_path = hemis_sync, public;
+
 -- =====================================================================
 -- V2 - Bo sung schema hemis_sync de lay du lieu tu kho du lieu cu (DWH)
 --
@@ -81,28 +84,23 @@ COMMENT ON TABLE co_so_giao_duc IS
 
 -- ---------------------------------------------------------------------
 -- 2. entity_map - doi khoa sang KHOA NGHIEP VU
---
--- LY DO: DWH trien khai bang reset_all.sql (xoa va tao lai toan bo). Khoa
--- chinh la SERIAL nen sau moi lan nap lai, ID cua cung mot nguoi se khac.
--- Neu gan GUID theo ID thi GUID se doi -> HEMIS coi la ban ghi moi -> nhan
--- ban du lieu tren he thong cua Bo, khong go lai duoc.
---
--- Vi vay khoa phai la thu KHONG DOI theo nghiep vu: so CCCD, ma chuong
--- trinh dao tao, ma nganh...
+-- (Thuc hien migration an toan, khong dung DROP TABLE de bao toan du lieu)
 -- ---------------------------------------------------------------------
-DROP TABLE IF EXISTS entity_map;
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'hemis_sync' AND table_name = 'entity_map' AND column_name = 'entity_type') THEN
+        ALTER TABLE hemis_sync.entity_map ADD COLUMN entity_type VARCHAR(50);
+        ALTER TABLE hemis_sync.entity_map ADD COLUMN business_key VARCHAR(200);
+        ALTER TABLE hemis_sync.entity_map ADD COLUMN first_sent_at TIMESTAMPTZ;
+        UPDATE hemis_sync.entity_map SET entity_type = UPPER(local_table) WHERE entity_type IS NULL;
+        UPDATE hemis_sync.entity_map SET business_key = local_id WHERE business_key IS NULL;
+        ALTER TABLE hemis_sync.entity_map ALTER COLUMN entity_type SET NOT NULL;
+        ALTER TABLE hemis_sync.entity_map ALTER COLUMN business_key SET NOT NULL;
+        ALTER TABLE hemis_sync.entity_map DROP CONSTRAINT IF EXISTS pk_entity_map;
+        ALTER TABLE hemis_sync.entity_map ADD CONSTRAINT pk_entity_map PRIMARY KEY (entity_type, business_key);
+    END IF;
+END $$;
 
-CREATE TABLE entity_map (
-    entity_type   VARCHAR(50)  NOT NULL,   -- CAN_BO, NGUOI_HOC, CHUONG_TRINH_DT...
-    business_key  VARCHAR(200) NOT NULL,   -- SoCCCD, MaChuongTrinhDaoTao...
-    hemis_id      UUID         NOT NULL DEFAULT gen_random_uuid(),
-    local_table   VARCHAR(100),            -- de tham chieu nguoc, khong phai khoa
-    local_id      VARCHAR(100),
-    first_sent_at TIMESTAMPTZ,
-    created_at    TIMESTAMPTZ  NOT NULL DEFAULT now(),
-    CONSTRAINT pk_entity_map PRIMARY KEY (entity_type, business_key),
-    CONSTRAINT uq_entity_map_hemis_id UNIQUE (hemis_id)
-);
 COMMENT ON COLUMN entity_map.business_key IS
   'Khoa nghiep vu KHONG DOI. TUYET DOI khong dung khoa SERIAL cua DWH.';
 COMMENT ON COLUMN entity_map.first_sent_at IS
@@ -216,3 +214,29 @@ SELECT code, 2026,
        CASE WHEN code IN ('B4A', 'B6B') THEN DATE '2027-03-15'   -- tai chinh
             ELSE DATE '2026-12-15' END
 FROM data_group;
+
+
+-- ---------------------------------------------------------------------
+-- 2b. dia_gioi_map: anh xa dia gioi cu -> moi theo QD 19/2025 (SV1-04)
+-- ---------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS hemis_sync.dia_gioi_map (
+    id         BIGSERIAL    PRIMARY KEY,
+    ma_cu      VARCHAR(50)  NOT NULL,
+    ma_moi     VARCHAR(50),
+    ten_cu     VARCHAR(200),
+    ten_moi    VARCHAR(200),
+    loai       VARCHAR(20)  NOT NULL,
+    ghi_chu    VARCHAR(500),
+    created_at TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    CONSTRAINT uq_dia_gioi_map UNIQUE (loai, ma_cu),
+    CONSTRAINT ck_dia_gioi_map_loai CHECK (loai IN ('TINH', 'HUYEN', 'XA'))
+);
+CREATE INDEX IF NOT EXISTS ix_dia_gioi_map_lookup ON hemis_sync.dia_gioi_map (loai, ma_cu);
+
+-- Bo sung CHECK constraint cho catalog_map.strategy
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema = 'hemis_sync' AND constraint_name = 'ck_catalog_map_strategy') THEN
+        ALTER TABLE hemis_sync.catalog_map ADD CONSTRAINT ck_catalog_map_strategy CHECK (strategy IN ('IDENTITY', 'MAPPED', 'MISSING'));
+    END IF;
+END $$;
