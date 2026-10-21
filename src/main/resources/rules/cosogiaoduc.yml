@@ -1,0 +1,230 @@
+ph: COSOGIAODUC
+entity: _CO_SO_GIAO_DUC
+rules:
+  - tt: 1
+    field: Id
+    required: true
+    max_length: 36
+    data_type: guid
+    note: Id ban ghi
+
+  - tt: 2
+    field: Created
+    required: true
+    data_type: date
+    note: Ngay tao ban ghi
+
+  - tt: 3
+    field: Modified
+    required: true
+    data_type: date
+    note: Ngay cap nhat ban ghi gan nhat
+
+  - tt: 4
+    field: MA_DON_VI
+    required: true
+    max_length: 50
+    data_type: string
+    note: Ma don vi tren he thong HEMIS
+
+  - tt: 5
+    field: XA_PHUONG_ID
+    required: false
+    max_length: 36
+    data_type: string
+    note: Xa/Phuong theo danh muc Hemis (ma danh muc)
+
+  - tt: 6
+    field: WEBSITE
+    required: true
+    max_length: 250
+    data_type: string
+    note: Website
+
+  - tt: 7
+    field: TINH_THANH_ID
+    required: false
+    max_length: 36
+    data_type: string
+    note: Tinh/Thanh pho theo danh muc Hemis (ma danh muc)
+
+  - tt: 8
+    field: TEN_TIENG_ANH
+    required: false
+    max_length: 250
+    data_type: string
+    note: Ten tieng Anh
+
+  - tt: 9
+    field: TEN_DON_VI_CHA
+    required: false
+    max_length: 250
+    data_type: string
+    note: Ten don vi cha
+
+  - tt: 10
+    field: TEN_DON_VI
+    required: true
+    max_length: 250
+    data_type: string
+    note: Ten don vi
+
+  - tt: 11
+    field: SO_QD_THANH_LAP
+    required: true
+    max_length: 50
+    data_type: string
+    note: So quyet dinh thanh lap
+
+  - tt: 12
+    field: SO_QD_CHUYEN_DOI_LOAI_HINH
+    required: false
+    max_length: 50
+    data_type: string
+    note: So quyet dinh chuyen doi loai hinh
+
+  - tt: 13
+    field: SO_QD_CAP_PHEP_HOAT_DONG
+    required: false
+    max_length: 50
+    data_type: string
+    note: So quyet dinh cap phep hoat dong
+
+  - tt: 14
+    field: SO_GV_GDTC
+    required: false
+    data_type: int
+    note: So giao vien giao duc the chat can co theo quy dinh
+
+  - tt: 15
+    field: SO_DIEN_THOAI
+    required: true
+    max_length: 50
+    data_type: string
+    note: So dien thoai
+
+  - tt: 16
+    field: QUAN_HUYEN_ID
+    required: false
+    max_length: 36
+    data_type: string
+    note: Quan/Huyen theo danh muc (ma danh muc)
+
+  - tt: 17
+    field: NGAY_QD_THANH_LAP
+    required: true
+    data_type: date
+    note: Ngay ky quyet dinh thanh lap
+
+  - tt: 18
+    field: NGAY_QD_CHUYEN_DOI
+    required: false
+    data_type: date
+    note: Ngay ky quyet dinh chuyen doi loai hinh
+
+  - tt: 19
+    field: NGAY_DUOC_CAP_PHEP_HOAT_DONG
+    required: true
+    data_type: date
+    note: Ngay duoc cap phep hoat dong
+
+  - tt: 21
+    field: LOAI_HINH_ID
+    required: true
+    max_length: 36
+    data_type: string
+    note: Loai hinh truong theo danh muc Hemis (ma danh muc)
+
+  - tt: 22
+    field: IS_LOI_NHUAN
+    required: false
+    data_type: bool
+    note: Hoat dong khong loi nhuan
+
+  - tt: 23
+    field: HINH_THUC_THANH_LAP
+    required: true
+    max_length: 250
+    data_type: string
+    note: Hinh thuc thanh lap theo danh muc Hemis (ma danh muc)
+
+  - tt: 24
+    field: FAX
+    required: false
+    max_length: 50
+    data_type: string
+    note: Fax
+
+  - tt: 25
+    field: EMAIL
+    required: true
+    max_length: 100
+    data_type: string
+    note: Email
+
+  - tt: 26
+    field: TU_CHU
+    required: false
+    data_type: bool
+    note: Co tu chu giao duc QPAN
+
+  - tt: 27
+    field: DIA_CHI
+    required: true
+    max_length: 250
+    data_type: string
+    note: Dia chi
+
+  - tt: 28
+    field: LOAI_CO_SO
+    required: true
+    max_length: 50
+    data_type: string
+    note: Phan loai co so theo danh muc Hemis (ma danh muc)
+
+  - tt: 29
+    field: QD_BAN_HANH_QUY_CHE
+    required: false
+    max_length: 100
+    data_type: string
+    note: So quyet dinh ban hanh quy che tai chinh
+
+  - tt: 30
+    field: NGAY_QD_BAN_HANH_QUY_CHE
+    required: false
+    data_type: date
+    note: Ngay ban hanh quy che tai chinh
+
+  - tt: 31
+    field: TRUONG_DAC_THU
+    required: true
+    data_type: date
+    note: Dao tao nganh dac thu
+
+  - tt: 32
+    field: MA_DINH_DANH_DIEN_TU
+    required: false
+    max_length: 50
+    data_type: string
+    note: Ma dinh danh dien tu (QD 20)
+
+  - tt: 33
+    field: TINH_THANH_NEW
+    required: true
+    max_length: 36
+    data_type: string
+    note: Tinh/Thanh pho (theo dia gioi moi)
+
+  - tt: 34
+    field: XA_PHUONG_NEW
+    required: true
+    max_length: 36
+    data_type: string
+    note: Xa/Phuong (theo dia gioi moi)
+
+  - tt: 35
+    field: MA_DINH_DANH_ND69
+    required: true
+    max_length: 36
+    data_type: string
+    note: Ma dinh danh theo nghi dinh 69
