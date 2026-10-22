@@ -25,11 +25,15 @@ import vn.edu.hcmue.hemis.journal.ApiLog;
 import vn.edu.hcmue.hemis.journal.ApiLogRepository;
 import vn.edu.hcmue.hemis.journal.SyncBatch;
 import vn.edu.hcmue.hemis.journal.SyncBatchRepository;
+import vn.edu.hcmue.hemis.journal.SyncError;
+import vn.edu.hcmue.hemis.journal.SyncErrorRepository;
+import vn.edu.hcmue.hemis.journal.ValidationRuleRepository;
 import vn.edu.hcmue.hemis.packaging.Iks;
 import vn.edu.hcmue.hemis.packaging.XmlPackager;
 import vn.edu.hcmue.hemis.signing.SignJob;
 import vn.edu.hcmue.hemis.signing.SignJobRepository;
 import vn.edu.hcmue.hemis.staging.PhanHeExtractor;
+import vn.edu.hcmue.hemis.validation.RecordValidator;
 
 /**
  * Dieu phoi mot dot dong bo. Chia lam HAI buoc tach biet, co the chay cach nhau:
@@ -57,11 +61,16 @@ public class SyncOrchestrator {
     private final ApiLogRepository apiLogs;
     private final HemisProperties props;
     private final ObjectMapper objectMapper;
+    private final RecordValidator validator;
+    private final ValidationRuleRepository validationRules;
+    private final SyncErrorRepository syncErrors;
 
     public SyncOrchestrator(List<PhanHeExtractor> extractors, XmlPackager xmlPackager,
                             HemisSyncClient syncClient, SyncBatchRepository batches,
                             SignJobRepository signJobs, ApiLogRepository apiLogs,
-                            HemisProperties props, ObjectMapper objectMapper) {
+                            HemisProperties props, ObjectMapper objectMapper,
+                            RecordValidator validator, ValidationRuleRepository validationRules,
+                            SyncErrorRepository syncErrors) {
         this.extractors = extractors;
         this.xmlPackager = xmlPackager;
         this.syncClient = syncClient;
@@ -70,6 +79,9 @@ public class SyncOrchestrator {
         this.apiLogs = apiLogs;
         this.props = props;
         this.objectMapper = objectMapper;
+        this.validator = validator;
+        this.validationRules = validationRules;
+        this.syncErrors = syncErrors;
     }
 
     // =================================================================
@@ -98,8 +110,22 @@ public class SyncOrchestrator {
         PhanHeExtractor.Result data = extractor.extract();
         batch.setRecordCount(data.recordCount());
 
-        // 2. TODO tuan 3: chay bo quy tac kiem tra o day.
-        //    Neu con loi muc BLOCK thi dat trang thai CHO_SUA_LOI va dung lai.
+        // 2. Kiem tra tung ban ghi, luu moi vi pham thanh mot dong sync_error.
+        List<SyncError> errors = kiemTraBanGhi(batch, extractor.ph(), data.jsonBody());
+        SyncBatch batchForLog = batch;
+        if (!errors.isEmpty()) {
+            errors.stream().filter(e -> RecordValidator.SEVERITY_WARN.equals(e.getSeverity()))
+                .forEach(e -> log.warn("Canh bao dong bo batch {}: {}", batchForLog.getId(), e.getMessage()));
+        }
+        boolean hasBlock = errors.stream()
+                .anyMatch(e -> RecordValidator.SEVERITY_BLOCK.equals(e.getSeverity()));
+        if (hasBlock) {
+            batch.setStatus(SyncBatch.Status.CHO_SUA_LOI);
+            batch.setMessage("Có " + errors.stream()
+                    .filter(e -> RecordValidator.SEVERITY_BLOCK.equals(e.getSeverity())).count()
+                    + " lỗi BLOCK; cần sửa dữ liệu nguồn trước khi đóng gói");
+            return batches.save(batch);
+        }
 
         // 3. Dong goi XML (chua ky) va JSON
         String xml = xmlPackager.build(iks, props.maDonVi(), props.tenDonVi(), data.xmlLists());
@@ -211,6 +237,46 @@ public class SyncOrchestrator {
                     "success=" + res.success() + ", message=" + res.message(), 2000);
         }
         apiLogs.save(logEntry);
+    }
+
+    private List<SyncError> kiemTraBanGhi(SyncBatch batch, String ph, Map<String, Object> jsonBody) {
+        List<SyncError> errors = new java.util.ArrayList<>();
+        for (Map.Entry<String, Object> entry : jsonBody.entrySet()) {
+            String entity = entry.getKey();
+            List<Map<String, Object>> records = records(entry.getValue());
+            if (records.isEmpty()) {
+                continue;
+            }
+            var rules = validationRules.findByPhAndEntity(ph, entity);
+            for (Map<String, Object> record : records) {
+                Object id = record.containsKey("Id") ? record.get("Id") : record.get("local_id");
+                String localId = id == null ? null : String.valueOf(id);
+                for (RecordValidator.Violation violation : validator.validate(localId, rules, record)) {
+                    SyncError error = new SyncError();
+                    error.setBatchId(batch.getId());
+                    error.setEntity(entity);
+                    error.setLocalId(violation.localId());
+                    error.setField(violation.field());
+                    error.setRuleCode(violation.ruleCode());
+                    error.setSeverity(violation.severity());
+                    error.setMessage(violation.message());
+                    errors.add(error);
+                }
+            }
+        }
+        return syncErrors.saveAll(errors);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static List<Map<String, Object>> records(Object value) {
+        if (value instanceof Map<?, ?> map) {
+            return List.of((Map<String, Object>) map);
+        }
+        if (value instanceof List<?> list) {
+            return list.stream().filter(Map.class::isInstance)
+                    .map(item -> (Map<String, Object>) item).toList();
+        }
+        return List.of();
     }
 
     private String toJson(Map<String, Object> body) {
