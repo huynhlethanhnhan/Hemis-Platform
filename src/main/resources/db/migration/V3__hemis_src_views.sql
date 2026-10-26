@@ -216,11 +216,70 @@ RETURNS TABLE (
     ty_le_dat_pct   NUMERIC
 )
 LANGUAGE plpgsql AS $$
+DECLARE
+    v_view       TEXT;
+    v_field      TEXT;
+    v_total      BIGINT;
+    v_missing    BIGINT;
+    v_rule       RECORD;
 BEGIN
-    -- Khung ham. Hoan thien o nhiem vu SV2-03: doc danh sach truong bat buoc
-    -- tu bang validation_rule, sinh truy van dem gia tri rong tren view
-    -- hemis_src tuong ung, tra ve ty le dat cho tung truong.
-    RAISE NOTICE 'Chua trien khai cho phan he %. Xem nhiem vu SV2-03.', p_ph;
+    v_view := CASE upper(trim(p_ph))
+        WHEN 'COSOGIAODUC' THEN 'v_co_so_giao_duc'
+        WHEN 'CANBO'       THEN 'v_can_bo'
+        WHEN 'HOCVIEN'     THEN 'v_nguoi_hoc'
+        ELSE NULL
+    END;
+
+    IF v_view IS NULL THEN
+        RAISE EXCEPTION 'Phan he % chua co view hemis_src tuong ung', p_ph;
+    END IF;
+
+    -- Lay so ban ghi mot lan; ket qua van co mot dong cho moi truong bat buoc,
+    -- ke ca khi view rong (ty le dat khi do la 0).
+    EXECUTE format('SELECT count(*) FROM hemis_src.%I', v_view) INTO v_total;
+
+    FOR v_rule IN
+        SELECT DISTINCT vr.field
+        FROM hemis_sync.validation_rule vr
+        WHERE upper(vr.ph) = upper(trim(p_ph))
+          AND vr.required
+        ORDER BY vr.field
+    LOOP
+        v_field := v_rule.field;
+
+        -- Ten truong trong validation_rule la ten cot API (vd. HO_TEN).
+        -- Kiem tra truoc de loi cau hinh hien ro thay vi loi SQL dong kho hieu.
+        IF NOT EXISTS (
+            SELECT 1
+            FROM information_schema.columns c
+            WHERE c.table_schema = 'hemis_src'
+              AND c.table_name = v_view
+              AND upper(c.column_name) = upper(v_field)
+        ) THEN
+            RAISE EXCEPTION 'Truong bat buoc %.% khong ton tai tren hemis_src.%',
+                p_ph, v_field, v_view;
+        END IF;
+
+        EXECUTE format(
+            'SELECT count(*) FILTER (WHERE %1$I IS NULL OR btrim(%1$I::text) = '''') FROM hemis_src.%2$I',
+            (SELECT c.column_name
+             FROM information_schema.columns c
+             WHERE c.table_schema = 'hemis_src'
+               AND c.table_name = v_view
+               AND upper(c.column_name) = upper(v_field)
+             LIMIT 1),
+            v_view
+        ) INTO v_missing;
+
+        truong := v_field::VARCHAR;
+        so_ban_ghi := v_total;
+        so_thieu := v_missing;
+        ty_le_dat_pct := CASE
+            WHEN v_total = 0 THEN 0
+            ELSE round((v_total - v_missing)::NUMERIC * 100 / v_total, 2)
+        END;
+        RETURN NEXT;
+    END LOOP;
     RETURN;
 END $$;
 
