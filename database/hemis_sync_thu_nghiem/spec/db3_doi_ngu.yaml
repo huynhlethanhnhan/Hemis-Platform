@@ -1,0 +1,4443 @@
+# docs/spec/db3_doi_ngu.yaml - SINH TU DONG boi docs/spec/sinh_yaml.py tu spec-text muc 6 (dong 1516-2769).
+# Khong sua tay. Danh muc tham chieu ('danh_muc') la SUY LUAN - xem VAN_DE_SPEC.md.
+# Khong co du lieu ca nhan: moi gia tri vi du trong spec (ho ten, email, CCCD, Id) khong duoc chep.
+nhom: "db3"
+ph: "CANBO"
+ph_can_xac_minh: true
+ph_ly_do: "spec không ghi tường minh db3 <-> PH=CANBO; suy từ ngữ nghĩa (mục 6 là đội ngũ) và ví dụ XML CANBO với DanhSachCanboHoso (dòng 510-512); thứ tự 12 giá trị PH ở dòng 464-472 không trùng thứ tự dbN"
+mo_ta: "Đội ngũ (hồ sơ cán bộ và các mảng con)"
+nguon: {"file": "docs/spec-text/api-hemis-v2-chinh-thuc.txt", "muc": "6", "dong": [1516, 2769]}
+api: {"method": "POST", "url_mau": "https://hemis-test.moet.gov.vn/gwdev/dongbodulieubeta/v5/co_so_giao_duc_input/db3/{DON_VI_ID}/{IdKey}", "header": ["Content-Type: application/json", "Authorization: Bearer {token}"], "path_params": {"DON_VI_ID": {"kieu": "guid", "do_dai": 36, "bat_buoc": true}, "IdKey": {"kieu": "guid", "do_dai": 36, "bat_buoc": true}}, "dong_nguon": [1517, 1556]}
+request_body:
+  # Bang 6.3 (dong 1558-1647). Cot 'Bat buoc' cua cac mang ghi ky hieu '*' (khong giai thich trong spec).
+  # t_k va DomainConnect de trong cot Bat buoc o db3; cac nhom khac ghi 'x' cho t_k.
+  truong_goc:
+    - tt: 1
+      ten: "t_k"
+      kieu: "guid"
+      do_dai: 36
+      bat_buoc: false
+      mo_ta: "Mã phiên ký số (IKS); hiện KHÔNG được API này xác thực (xem ghi chú phía trên)"
+      can_xac_minh: true
+      ly_do_xac_minh: "mô tả trỏ tới 'ghi chú phía trên' nhưng mục 6.1-6.3 không có ghi chú nào; các nhóm db1/db2/db4... ghi t_k bắt buộc và được xác thực qua API ký số"
+      dong_nguon: 1563
+    - tt: 2
+      ten: "DomainConnect"
+      kieu: "string"
+      do_dai: 255
+      bat_buoc: false
+      mo_ta: "Domain/định danh hệ thống nguồn gọi API (lưu vào log)"
+      can_xac_minh: false
+      dong_nguon: 1567
+  mang:
+    - tt: 3
+      ten: "_CANBO_HOSO"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1570
+    - tt: 4
+      ten: "_CANBO_HOSO_DON_VI"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1573
+    - tt: 5
+      ten: "_CANBO_HOSO_DONVITG"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1576
+    - tt: 6
+      ten: "_CANBO_GIAO_VIEN_QPAN"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1579
+    - tt: 7
+      ten: "_CANBO_GV_NUOC_NGOAI"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1586
+    - tt: 8
+      ten: "_CANBO_TRINH_DO_TIENG_DT"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1589
+    - tt: 9
+      ten: "_CANBO_HOSO_BOIDUONGTH"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1592
+    - tt: 10
+      ten: "_CANBO_HOSO_DANHGIA_90"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1595
+    - tt: 11
+      ten: "_CANBO_HOSO_DBLUONG"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1598
+    - tt: 12
+      ten: "_CANBO_HOSO_DTCHINHSACH"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1601
+    - tt: 13
+      ten: "_CANBO_HOSO_HD_NVSHV"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1604
+    - tt: 14
+      ten: "_CANBO_HOSO_HOC_HAM"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1607
+    - tt: 15
+      ten: "_CANBO_HOSO_HOPDONG"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1610
+    - tt: 16
+      ten: "_CANBO_HOSO_HOPDONG_THINHGIANG"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1611
+    - tt: 17
+      ten: "_CANBO_HOSO_KHENTHUONG"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1614
+    - tt: 18
+      ten: "_CANBO_HOSO_KYLUAT"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1619
+    - tt: 19
+      ten: "_CANBO_HOSO_LINHVUCNC"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1622
+    - tt: 20
+      ten: "_CANBO_HOSO_NGANH_DUNG_TEN"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1625
+    - tt: 21
+      ten: "_CANBO_HOSO_NGANHGD"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1628
+    - tt: 22
+      ten: "_CANBO_HOSO_PHUCAP"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1631
+    - tt: 23
+      ten: "_CANBO_HOSO_QTCT"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1634
+    - tt: 24
+      ten: "_CANBO_HOSO_QTDAOTAO"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1637
+    - tt: 25
+      ten: "_CO_CAU_TO_CHUC"
+      bat_buoc_ky_hieu: "*"
+      bat_buoc: null
+      can_xac_minh: true
+      ly_do_xac_minh: "ký hiệu '*' ở cột Bắt buộc không được giải thích"
+      dong_nguon: 1640
+  truong_bo_qua:
+    tt: 26
+    ten: ["CONFIG_VALUE", "CONFIG_KEY", "UserName", "Created", "DON_VI_ID", "CERTPEM"]
+    mo_ta: "Trường dùng chung của model, API này không xử lý – có thể bỏ qua (DON_VI_ID tính 'trong body')"
+    dong_nguon: [1642, 1647]
+response: {"dong_nguon": [2750, 2769], "success": {"kieu": "bool", "bat_buoc": true}, "message": {"kieu": "string", "bat_buoc": false}, "data": {"kieu": "object", "ten_kieu": "CANBO_HOSO_INPUT_API", "bat_buoc": true, "mo_ta": "rỗng khi đồng bộ thành công (chỉ mang tính xác nhận, không chứa dữ liệu nghiệp vụ)"}}
+mang:
+  - ten: "_CANBO_HOSO"
+    the_xml_danh_sach: "DanhSachCanboHoso"
+    the_xml_ban_ghi: "CanboHoso"
+    the_xml_can_xac_minh: false
+    the_xml_nguon: "vi_du_trong_spec: dòng 510, 538-547"
+    mo_ta: "Hồ sơ chính cán bộ"
+    muc_nguon: "6.4"
+    dong_nguon: [1650, 1920]
+    so_truong_theo_spec: 71
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.4"
+        dong_nguon: 1655
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.4"
+        dong_nguon: 1657
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.4"
+        dong_nguon: 1660
+        can_xac_minh: false
+      - tt: 4
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND"
+        muc_nguon: "6.4"
+        dong_nguon: 1663
+        can_xac_minh: false
+      - tt: 5
+        ten: "HO_DEM"
+        the_xml: "HoDem"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 250
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Họ đệm"
+        muc_nguon: "6.4"
+        dong_nguon: 1665
+        can_xac_minh: false
+      - tt: 6
+        ten: "TEN_GOI"
+        the_xml: "TenGoi"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 250
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Tên gọi"
+        muc_nguon: "6.4"
+        dong_nguon: 1667
+        can_xac_minh: false
+      - tt: 7
+        ten: "NGAY_SINH"
+        the_xml: "NgaySinh"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày sinh"
+        muc_nguon: "6.4"
+        dong_nguon: 1669
+        can_xac_minh: false
+      - tt: 8
+        ten: "DAN_TOC_ID"
+        the_xml: "DanTocId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_DAN_TOC"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Dân tộc theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1672
+        can_xac_minh: false
+      - tt: 9
+        ten: "GIOI_TINH_ID"
+        the_xml: "GioiTinhId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_GIOI_TINH"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Giới tính theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1677
+        can_xac_minh: false
+      - tt: 10
+        ten: "QUOC_TICH_ID"
+        the_xml: "QuocTichId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_QUOC_TICH"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Quốc tịch theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1683
+        can_xac_minh: false
+      - tt: 11
+        ten: "TON_GIAO_ID"
+        the_xml: "TonGiaoId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_TON_GIAO"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Tôn giáo theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1689
+        can_xac_minh: false
+      - tt: 12
+        ten: "HK_TINH_ID"
+        the_xml: "HkTinhId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_TINH"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Hộ khẩu – Tỉnh/Thành phố theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1693
+        can_xac_minh: false
+      - tt: 13
+        ten: "HK_HUYEN_ID"
+        the_xml: "HkHuyenId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_HUYEN"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Hộ khẩu – Quận/Huyện theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1699
+        can_xac_minh: false
+      - tt: 14
+        ten: "HK_XA_ID"
+        the_xml: "HkXaId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_XA"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Hộ khẩu – Xã/Phường theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1705
+        can_xac_minh: false
+      - tt: 15
+        ten: "HK_TINH_NEW"
+        the_xml: "HkTinhNew"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 20
+        bat_buoc: true
+        danh_muc: "DM_TINH_NEW"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Hộ khẩu – Tỉnh/Thành phố (theo địa giới mới) theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1709
+        can_xac_minh: false
+      - tt: 16
+        ten: "HK_XA_NEW"
+        the_xml: "HkXaNew"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 20
+        bat_buoc: true
+        danh_muc: "DM_XA_NEW"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Hộ khẩu – Xã/Phường (theo địa giới mới) theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1715
+        can_xac_minh: false
+      - tt: 17
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.4"
+        dong_nguon: 1721
+        can_xac_minh: false
+      - tt: 18
+        ten: "MA_CAN_BO"
+        the_xml: "MaCanBo"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Mã cán bộ"
+        muc_nguon: "6.4"
+        dong_nguon: 1723
+        can_xac_minh: false
+      - tt: 19
+        ten: "BAC_SI_CK_DUOC_SI_CK_I"
+        the_xml: "BacSiCkDuocSiCkI"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Bác sĩ CK/Dược sĩ CK I"
+        muc_nguon: "6.4"
+        dong_nguon: 1729
+        can_xac_minh: true
+        ly_do_xac_minh: "kiểu ghi theo dòng nguồn: dòng 1732 ghi `string -` (spec chính thức: 'string', độ dài '-'); bằng chứng ngược: hai 'Đúng/Sai' ở dòng 1727-1728 đứng ngay trên hàng 19 và bản nháp dòng 1824 ghi 'Đúng/Sai' cho TT 20; D04/BE không coi kiểu bool hay string là chắc chắn, giữ nguyên chờ Cục xác nhận; hàng 19 tự nó (dòng 1729) chỉ có '-' ở cột độ dài, chữ 'string' nằm ở dòng 1730-1731; kiểu/độ dài/dấu x của hàng này bị trôi cột trong PDF; ghép theo thứ tự cột; hai bản spec cho cùng dãy giá trị theo thứ tự, chỉ khác vị trí dòng"
+      - tt: 20
+        ten: "BAC_SI_CK_DUOC_SI_CK_II"
+        the_xml: "BacSiCkDuocSiCkIi"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Bác sĩ CK/Dược sĩ CK II"
+        muc_nguon: "6.4"
+        dong_nguon: 1732
+        can_xac_minh: true
+        ly_do_xac_minh: "kiểu ghi theo dòng nguồn: dòng 1732 ghi `string -` (spec chính thức: 'string', độ dài '-'); bằng chứng ngược: hai 'Đúng/Sai' ở dòng 1727-1728 đứng ngay trên hàng 19 và bản nháp dòng 1824 ghi 'Đúng/Sai' cho TT 20; D04/BE không coi kiểu bool hay string là chắc chắn, giữ nguyên chờ Cục xác nhận; kiểu/độ dài/dấu x của hàng này bị trôi cột trong PDF; ghép theo thứ tự cột; hai bản spec cho cùng dãy giá trị theo thứ tự, chỉ khác vị trí dòng; thẻ XML: token 'II' (số La Mã) có thể là 'Ii' (theo quy tắc PascalCase từng token) hoặc 'II'; spec không có ví dụ"
+      - tt: 21
+        ten: "EMAIL"
+        the_xml: "Email"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 250
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Email"
+        muc_nguon: "6.4"
+        dong_nguon: 1733
+        can_xac_minh: true
+        ly_do_xac_minh: "độ dài 250 gán theo thứ tự (250 rồi 50 đứng trước Email/Số điện thoại); kiểu/độ dài/dấu x của hàng này bị trôi cột trong PDF; ghép theo thứ tự cột; hai bản spec cho cùng dãy giá trị theo thứ tự, chỉ khác vị trí dòng"
+      - tt: 22
+        ten: "DIEN_THOAI"
+        the_xml: "DienThoai"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Số điện thoại"
+        muc_nguon: "6.4"
+        dong_nguon: 1734
+        can_xac_minh: true
+        ly_do_xac_minh: "độ dài 50 gán theo thứ tự; kiểu/độ dài/dấu x của hàng này bị trôi cột trong PDF; ghép theo thứ tự cột; hai bản spec cho cùng dãy giá trị theo thứ tự, chỉ khác vị trí dòng"
+      - tt: 23
+        ten: "TRANG_THAI_CAN_BO_ID"
+        the_xml: "TrangThaiCanBoId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_TRANG_THAI_CAN_BO"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Trạng thái cán bộ theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1741
+        can_xac_minh: false
+      - tt: 24
+        ten: "CHUC_DANH_NGHE_NGHIEP"
+        the_xml: "ChucDanhNgheNghiep"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_CHUC_DANH_NGHE_NGHIEP"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Chức danh nghề nghiệp theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1747
+        can_xac_minh: false
+      - tt: 25
+        ten: "CHUC_DANH_GIANG_VIEN"
+        the_xml: "ChucDanhGiangVien"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_CHUC_DANH_GIANG_VIEN"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Chức danh giảng viên theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1753
+        can_xac_minh: false
+      - tt: 26
+        ten: "CHUC_DANH_NGHIEN_CUU_KHOA_HOC"
+        the_xml: "ChucDanhNghienCuuKhoaHoc"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_CHUC_DANH_NGHIEN_CUU_KHOA_HOC"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Chức danh nghiên cứu khoa học theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1757
+        can_xac_minh: false
+      - tt: 27
+        ten: "NGACH_ID"
+        the_xml: "NgachId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_NGACH"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Ngạch công chức/viên chức theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1765
+        can_xac_minh: false
+      - tt: 28
+        ten: "KHUNG_NLUC_NNGU_ID"
+        the_xml: "KhungNlucNnguId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_KHUNG_NANG_LUC_NGOAI_NGU"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Khung năng lực ngoại ngữ theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1771
+        can_xac_minh: false
+      - tt: 29
+        ten: "TRINH_DO_LLCT_ID"
+        the_xml: "TrinhDoLlctId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_TRINH_DO_LLCT"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Trình độ lý luận chính trị theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1777
+        can_xac_minh: false
+      - tt: 30
+        ten: "TRINH_DO_QLNN_ID"
+        the_xml: "TrinhDoQlnnId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_TRINH_DO_QLNN"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Trình độ quản lý nhà nước theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1783
+        can_xac_minh: false
+      - tt: 31
+        ten: "TRINH_DO_TIN_HOC_ID"
+        the_xml: "TrinhDoTinHocId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_TRINH_DO_TIN_HOC"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Trình độ tin học theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1789
+        can_xac_minh: false
+      - tt: 32
+        ten: "IS_CHUNG_CHI_SP_GIANG_VIEN"
+        the_xml: "IsChungChiSpGiangVien"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Có chứng chỉ sư phạm giảng viên"
+        muc_nguon: "6.4"
+        dong_nguon: 1790
+        can_xac_minh: false
+      - tt: 33
+        ten: "IS_CHUNG_CHI_SP_GIAO_VIEN"
+        the_xml: "IsChungChiSpGiaoVien"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Có chứng chỉ sư phạm giáo viên"
+        muc_nguon: "6.4"
+        dong_nguon: 1791
+        can_xac_minh: false
+      - tt: 34
+        ten: "CHUC_VU_ID"
+        the_xml: "ChucVuId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_CHUC_VU"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Chức vụ theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1792
+        can_xac_minh: false
+      - tt: 35
+        ten: "CO_QUAN_CONG_TAC"
+        the_xml: "CoQuanCongTac"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 3600
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Cơ quan công tác"
+        muc_nguon: "6.4"
+        dong_nguon: 1793
+        can_xac_minh: true
+        ly_do_xac_minh: "độ dài 3600 bất thường (hai bản đều ghi 3600); nghi nhầm 360 nhưng không được tự sửa"
+      - tt: 36
+        ten: "NGAY_TUYEN_DUNG"
+        the_xml: "NgayTuyenDung"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tuyển dụng"
+        muc_nguon: "6.4"
+        dong_nguon: 1811
+        can_xac_minh: false
+      - tt: 37
+        ten: "NGAY_CHUYEN_TRANG_THAI"
+        the_xml: "NgayChuyenTrangThai"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày chuyển trạng thái"
+        muc_nguon: "6.4"
+        dong_nguon: 1813
+        can_xac_minh: false
+      - tt: 38
+        ten: "IS_MAC_LENIN"
+        the_xml: "IsMacLenin"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Có dạy môn Mác-Lênin"
+        muc_nguon: "6.4"
+        dong_nguon: 1815
+        can_xac_minh: false
+      - tt: 39
+        ten: "IS_SU_PHAM"
+        the_xml: "IsSuPham"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Có dạy môn sư phạm"
+        muc_nguon: "6.4"
+        dong_nguon: 1816
+        can_xac_minh: false
+      - tt: 40
+        ten: "SO_GIAY_PHEP_LAO_DONG"
+        the_xml: "SoGiayPhepLaoDong"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 100
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Số giấy phép lao động"
+        muc_nguon: "6.4"
+        dong_nguon: 1817
+        can_xac_minh: false
+      - tt: 41
+        ten: "GVNN_TU_NGAY"
+        the_xml: "GvnnTuNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Giảng viên nước ngoài – từ ngày"
+        muc_nguon: "6.4"
+        dong_nguon: 1818
+        can_xac_minh: false
+      - tt: 42
+        ten: "GVNN_DEN_NGAY"
+        the_xml: "GvnnDenNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Giảng viên nước ngoài – đến ngày"
+        muc_nguon: "6.4"
+        dong_nguon: 1825
+        can_xac_minh: false
+      - tt: 43
+        ten: "NGANH_THAM_GIA_DTTX"
+        the_xml: "NganhThamGiaDttx"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 500
+        bat_buoc: false
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_NGANH"]
+        mo_ta: "Ngành tham gia đào tạo từ xa theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1828
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả ghi 'theo danh mục HEMIS' nhưng không nêu tên; độ dài 500 gợi ý nhiều giá trị"
+      - tt: 44
+        ten: "THOI_GIAN_THAM_GIA_DAO_TAO"
+        the_xml: "ThoiGianThamGiaDaoTao"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Thời gian tham gia đào tạo"
+        muc_nguon: "6.4"
+        dong_nguon: 1834
+        can_xac_minh: false
+      - tt: 45
+        ten: "THAM_NIEN_CONG_TAC"
+        the_xml: "ThamNienCongTac"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 200
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Thâm niên công tác"
+        muc_nguon: "6.4"
+        dong_nguon: 1837
+        can_xac_minh: false
+      - tt: 46
+        ten: "TEN_DOANH_NGHIEP"
+        the_xml: "TenDoanhNghiep"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 2000
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Tên doanh nghiệp"
+        muc_nguon: "6.4"
+        dong_nguon: 1838
+        can_xac_minh: true
+        ly_do_xac_minh: "độ dài 2000 gán theo thứ tự cột độ dài (200, 2000, 2000, 50, -, -, 4000, 4000); kiểu/độ dài/dấu x của hàng này bị trôi cột trong PDF; ghép theo thứ tự cột; hai bản spec cho cùng dãy giá trị theo thứ tự, chỉ khác vị trí dòng"
+      - tt: 47
+        ten: "DIA_CHI_DTTX"
+        the_xml: "DiaChiDttx"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 2000
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Địa chỉ đào tạo từ xa"
+        muc_nguon: "6.4"
+        dong_nguon: 1839
+        can_xac_minh: true
+        ly_do_xac_minh: "độ dài 2000 gán theo thứ tự cột độ dài; kiểu/độ dài/dấu x của hàng này bị trôi cột trong PDF; ghép theo thứ tự cột; hai bản spec cho cùng dãy giá trị theo thứ tự, chỉ khác vị trí dòng"
+      - tt: 48
+        ten: "SO_QUYET_DINH"
+        the_xml: "SoQuyetDinh"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Số quyết định"
+        muc_nguon: "6.4"
+        dong_nguon: 1840
+        can_xac_minh: true
+        ly_do_xac_minh: "độ dài 50 gán theo thứ tự cột độ dài (bản nháp đặt 50 ở hàng 51); kiểu/độ dài/dấu x của hàng này bị trôi cột trong PDF; ghép theo thứ tự cột; hai bản spec cho cùng dãy giá trị theo thứ tự, chỉ khác vị trí dòng"
+      - tt: 49
+        ten: "NGAY_QUYET_DINH"
+        the_xml: "NgayQuyetDinh"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày quyết định"
+        muc_nguon: "6.4"
+        dong_nguon: 1841
+        can_xac_minh: true
+        ly_do_xac_minh: "kiểu Datetime gán theo thứ tự (bản nháp ghi 'string 2000' ở hàng này do trôi cột); kiểu/độ dài/dấu x của hàng này bị trôi cột trong PDF; ghép theo thứ tự cột; hai bản spec cho cùng dãy giá trị theo thứ tự, chỉ khác vị trí dòng"
+      - tt: 50
+        ten: "NGAY_KET_THUC_TAM_NGHI"
+        the_xml: "NgayKetThucTamNghi"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày kết thúc tạm nghỉ"
+        muc_nguon: "6.4"
+        dong_nguon: 1843
+        can_xac_minh: true
+        ly_do_xac_minh: "kiểu/độ dài/dấu x của hàng này bị trôi cột trong PDF; ghép theo thứ tự cột; hai bản spec cho cùng dãy giá trị theo thứ tự, chỉ khác vị trí dòng"
+      - tt: 51
+        ten: "HINH_THUC_CHUYEN_DEN"
+        the_xml: "HinhThucChuyenDen"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 4000
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Hình thức chuyển đến"
+        muc_nguon: "6.4"
+        dong_nguon: 1844
+        can_xac_minh: true
+        ly_do_xac_minh: "độ dài 4000 gán theo thứ tự cột độ dài (bản nháp đặt 50 ở hàng này); kiểu/độ dài/dấu x của hàng này bị trôi cột trong PDF; ghép theo thứ tự cột; hai bản spec cho cùng dãy giá trị theo thứ tự, chỉ khác vị trí dòng"
+      - tt: 52
+        ten: "KINH_NGHIEM_GIANG_DAY"
+        the_xml: "KinhNghiemGiangDay"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 4000
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Kinh nghiệm giảng dạy"
+        muc_nguon: "6.4"
+        dong_nguon: 1851
+        can_xac_minh: false
+      - tt: 53
+        ten: "GIANG_VIEN_DAP_UNG_TT"
+        the_xml: "GiangVienDapUngTt"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Giảng viên đáp ứng điều 5 mục 5 thông tư số 03/2022/TT-BGDĐT"
+        muc_nguon: "6.4"
+        dong_nguon: 1856
+        can_xac_minh: false
+      - tt: 54
+        ten: "THOI_GIAN_DTTX"
+        the_xml: "ThoiGianDttx"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Thời gian đào tạo từ xa"
+        muc_nguon: "6.4"
+        dong_nguon: 1857
+        can_xac_minh: false
+      - tt: 55
+        ten: "TRINH_DO_DAO_TAO_ID"
+        the_xml: "TrinhDoDaoTaoId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_TRINH_DO_DAO_TAO"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Trình độ đào tạo theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1858
+        can_xac_minh: false
+      - tt: 56
+        ten: "CHUYEN_MON_DUOC_DAO_TAO"
+        the_xml: "ChuyenMonDuocDaoTao"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 500
+        bat_buoc: false
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_CHUYEN_NGANH", "DM_TRINH_DO_CHUYEN_MON", "DM_NGANH"]
+        mo_ta: "Chuyên môn được đào tạo theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1871
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Chuyên môn được đào tạo theo danh mục HEMIS' không nêu tên danh mục; nhiều ứng viên"
+      - tt: 57
+        ten: "CHUC_DANH_KHOA_HOC"
+        the_xml: "ChucDanhKhoaHoc"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_CHUC_DANH_KHOA_HOC"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Chức danh khoa học theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1879
+        can_xac_minh: false
+      - tt: 58
+        ten: "NGOAI_NGU_ID"
+        the_xml: "NgoaiNguId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_NGOAI_NGU"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Ngoại ngữ theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1883
+        can_xac_minh: false
+      - tt: 59
+        ten: "IS_CONG_CHUC"
+        the_xml: "IsCongChuc"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Là công chức"
+        muc_nguon: "6.4"
+        dong_nguon: 1887
+        can_xac_minh: false
+      - tt: 60
+        ten: "IS_VIEN_CHUC"
+        the_xml: "IsVienChuc"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Là viên chức"
+        muc_nguon: "6.4"
+        dong_nguon: 1889
+        can_xac_minh: false
+      - tt: 61
+        ten: "BHXH_SO"
+        the_xml: "BhxhSo"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 500
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Số bảo hiểm xã hội"
+        muc_nguon: "6.4"
+        dong_nguon: 1891
+        can_xac_minh: false
+      - tt: 62
+        ten: "NGAY_VAO_DANG"
+        the_xml: "NgayVaoDang"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày vào Đảng"
+        muc_nguon: "6.4"
+        dong_nguon: 1893
+        can_xac_minh: false
+      - tt: 63
+        ten: "NGAY_VAO_DANG_CHINH_THUC"
+        the_xml: "NgayVaoDangChinhThuc"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày vào Đảng chính thức"
+        muc_nguon: "6.4"
+        dong_nguon: 1896
+        can_xac_minh: false
+      - tt: 64
+        ten: "NGAY_NHAP_NGU"
+        the_xml: "NgayNhapNgu"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày nhập ngũ"
+        muc_nguon: "6.4"
+        dong_nguon: 1899
+        can_xac_minh: false
+      - tt: 65
+        ten: "NGAY_XUAT_NGU"
+        the_xml: "NgayXuatNgu"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày xuất ngũ"
+        muc_nguon: "6.4"
+        dong_nguon: 1902
+        can_xac_minh: false
+      - tt: 66
+        ten: "THUONG_BINH_HANG_ID"
+        the_xml: "ThuongBinhHangId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_HANG_THUONG_BINH"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Hạng thương binh theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1905
+        can_xac_minh: false
+      - tt: 67
+        ten: "GIA_DINH_CHINH_SACH_ID"
+        the_xml: "GiaDinhChinhSachId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_HO_GIA_DINH_CHINH_SACH"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Gia đình chính sách theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.4"
+        dong_nguon: 1909
+        can_xac_minh: false
+      - tt: 68
+        ten: "CHO_LAM_VIEC_RIENG"
+        the_xml: "ChoLamViecRieng"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Có chỗ làm việc riêng (Tối thiểu 6m2)"
+        muc_nguon: "6.4"
+        dong_nguon: 1913
+        can_xac_minh: false
+      - tt: 69
+        ten: "TEN_CHUYEN_NGANH"
+        the_xml: "TenChuyenNganh"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 500
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Tên chuyên ngành"
+        muc_nguon: "6.4"
+        dong_nguon: 1916
+        can_xac_minh: false
+      - tt: 70
+        ten: "HE_SO_THAM_GIA"
+        the_xml: "HeSoThamGia"
+        kieu: "double"
+        kieu_spec: "double"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Hệ số tham gia"
+        muc_nguon: "6.4"
+        dong_nguon: 1918
+        can_xac_minh: false
+      - tt: 71
+        ten: "TONG_HE_SO_THAM_GIA"
+        the_xml: "TongHeSoThamGia"
+        kieu: "double"
+        kieu_spec: "double"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Tổng hệ số tham gia"
+        muc_nguon: "6.4"
+        dong_nguon: 1920
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_DON_VI"
+    the_xml_danh_sach: "DanhSachCanboHosoDonVi"
+    the_xml_ban_ghi: "CanboHosoDonVi"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Đơn vị công tác"
+    muc_nguon: "6.5"
+    dong_nguon: [1922, 1966]
+    so_truong_theo_spec: 15
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.5"
+        dong_nguon: 1927
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.5"
+        dong_nguon: 1929
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.5"
+        dong_nguon: 1932
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.5"
+        dong_nguon: 1935
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.5"
+        dong_nguon: 1937
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.5"
+        dong_nguon: 1939
+        can_xac_minh: false
+      - tt: 7
+        ten: "TU_NGAY"
+        the_xml: "TuNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Còn hiệu lực – từ ngày"
+        muc_nguon: "6.5"
+        dong_nguon: 1945
+        can_xac_minh: false
+      - tt: 8
+        ten: "DEN_NGAY"
+        the_xml: "DenNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Còn hiệu lực – đến ngày"
+        muc_nguon: "6.5"
+        dong_nguon: 1948
+        can_xac_minh: false
+      - tt: 9
+        ten: "DON_VI_CHINH"
+        the_xml: "DonViChinh"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Là đơn vị chính"
+        muc_nguon: "6.5"
+        dong_nguon: 1951
+        can_xac_minh: false
+      - tt: 10
+        ten: "DON_VI_GIANG_DAY"
+        the_xml: "DonViGiangDay"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Là đơn vị giảng dạy"
+        muc_nguon: "6.5"
+        dong_nguon: 1953
+        can_xac_minh: false
+      - tt: 11
+        ten: "MA_PHONG_BAN"
+        the_xml: "MaPhongBan"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id phòng ban/đơn vị công tác"
+        muc_nguon: "6.5"
+        dong_nguon: 1955
+        can_xac_minh: true
+        ly_do_xac_minh: "tên MA_ (mã) nhưng kiểu Guid 36 và mô tả 'Id phòng ban/đơn vị công tác'; không rõ tham chiếu _CO_CAU_TO_CHUC.Id hay MA_TO_CHUC_ID"
+      - tt: 12
+        ten: "CHUC_VU_ID"
+        the_xml: "ChucVuId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_CHUC_VU"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Chức vụ theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.5"
+        dong_nguon: 1957
+        can_xac_minh: false
+      - tt: 13
+        ten: "HINH_THUC_ID"
+        the_xml: "HinhThucId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_HINH_THUC_BO_NHIEM"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Hình thức bổ nhiệm theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.5"
+        dong_nguon: 1960
+        can_xac_minh: false
+      - tt: 14
+        ten: "SO_QUYET_DINH"
+        the_xml: "SoQuyetDinh"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Số quyết định"
+        muc_nguon: "6.5"
+        dong_nguon: 1963
+        can_xac_minh: false
+      - tt: 15
+        ten: "NGAY_QUYET_DINH"
+        the_xml: "NgayQuyetDinh"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày quyết định"
+        muc_nguon: "6.5"
+        dong_nguon: 1965
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_DONVITG"
+    the_xml_danh_sach: "DanhSachCanboHosoDonvitg"
+    the_xml_ban_ghi: "CanboHosoDonvitg"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Đơn vị thỉnh giảng"
+    muc_nguon: "6.6"
+    dong_nguon: [1968, 2005]
+    so_truong_theo_spec: 11
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.6"
+        dong_nguon: 1973
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.6"
+        dong_nguon: 1975
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.6"
+        dong_nguon: 1980
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.6"
+        dong_nguon: 1985
+        can_xac_minh: true
+        ly_do_xac_minh: "spec ghi string 36; các mảng khác ghi Guid 36 cho cùng tên trường"
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.6"
+        dong_nguon: 1987
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.6"
+        dong_nguon: 1989
+        can_xac_minh: false
+      - tt: 7
+        ten: "DON_VI_THINH_GIANG_ID"
+        the_xml: "DonViThinhGiangId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 250
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Đơn vị thỉnh giảng"
+        muc_nguon: "6.6"
+        dong_nguon: 1991
+        can_xac_minh: true
+        ly_do_xac_minh: "tên *_ID, string 250, mô tả 'Đơn vị thỉnh giảng'; không nêu nguồn tham chiếu (cùng tên ở _CANBO_HOSO_NGANHGD là string 36)"
+      - tt: 8
+        ten: "NAM"
+        the_xml: "Nam"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Thâm niên giảng dạy(số năm)"
+        muc_nguon: "6.6"
+        dong_nguon: 1993
+        can_xac_minh: false
+      - tt: 9
+        ten: "SO_HD_THINH_GIANG"
+        the_xml: "SoHdThinhGiang"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 100
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số hợp đồng"
+        muc_nguon: "6.6"
+        dong_nguon: 1995
+        can_xac_minh: false
+      - tt: 10
+        ten: "THOI_GIAN_BAT_DAU"
+        the_xml: "ThoiGianBatDau"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Thời gian bắt đầu"
+        muc_nguon: "6.6"
+        dong_nguon: 1997
+        can_xac_minh: false
+      - tt: 11
+        ten: "THOI_GIAN_KET_THUC"
+        the_xml: "ThoiGianKetThuc"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Thời gian kết thúc"
+        muc_nguon: "6.6"
+        dong_nguon: 2002
+        can_xac_minh: false
+  - ten: "_CANBO_GIAO_VIEN_QPAN"
+    the_xml_danh_sach: "DanhSachCanboGiaoVienQpan"
+    the_xml_ban_ghi: "CanboGiaoVienQpan"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Giáo viên GDQPAN"
+    muc_nguon: "6.7"
+    dong_nguon: [2007, 2050]
+    so_truong_theo_spec: 12
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.7"
+        dong_nguon: 2015
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.7"
+        dong_nguon: 2017
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.7"
+        dong_nguon: 2022
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.7"
+        dong_nguon: 2027
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.7"
+        dong_nguon: 2029
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.7"
+        dong_nguon: 2031
+        can_xac_minh: false
+      - tt: 7
+        ten: "DAO_TAO_GDQPAN"
+        the_xml: "DaoTaoGdqpan"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Đào tạo GDQPAN: 1 – Văn bằng 2; 2 – Cử nhân"
+        muc_nguon: "6.7"
+        dong_nguon: 2033
+        can_xac_minh: false
+      - tt: 8
+        ten: "LOAI_GIANG_VIEN_GDQPAN"
+        the_xml: "LoaiGiangVienGdqpan"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_LOAI_GV_QPAN"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Loại giảng viên GDQPAN theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.7"
+        dong_nguon: 2038
+        can_xac_minh: false
+      - tt: 9
+        ten: "NAM_BAT_DAU_BIET_PHAI"
+        the_xml: "NamBatDauBietPhai"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Năm bắt đầu biệt phái"
+        muc_nguon: "6.7"
+        dong_nguon: 2043
+        can_xac_minh: false
+      - tt: 10
+        ten: "QUAN_HAM"
+        the_xml: "QuanHam"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_QUAN_HAM"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Quân hàm theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.7"
+        dong_nguon: 2045
+        can_xac_minh: false
+      - tt: 11
+        ten: "SO_NAM_BIET_PHAI"
+        the_xml: "SoNamBietPhai"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Số năm biệt phái"
+        muc_nguon: "6.7"
+        dong_nguon: 2048
+        can_xac_minh: false
+      - tt: 12
+        ten: "SO_TRUONG_CONG_TAC"
+        the_xml: "SoTruongCongTac"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 255
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Sở trường công tác"
+        muc_nguon: "6.7"
+        dong_nguon: 2050
+        can_xac_minh: false
+  - ten: "_CANBO_GV_NUOC_NGOAI"
+    the_xml_danh_sach: "DanhSachCanboGvNuocNgoai"
+    the_xml_ban_ghi: "CanboGvNuocNgoai"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Giáo viên nước ngoài"
+    muc_nguon: "6.8"
+    dong_nguon: [2052, 2076]
+    so_truong_theo_spec: 8
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.8"
+        dong_nguon: 2058
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.8"
+        dong_nguon: 2060
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.8"
+        dong_nguon: 2063
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.8"
+        dong_nguon: 2066
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.8"
+        dong_nguon: 2068
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.8"
+        dong_nguon: 2070
+        can_xac_minh: false
+      - tt: 7
+        ten: "CO_QUAN_CHU_QUAN"
+        the_xml: "CoQuanChuQuan"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 2000
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Cơ quan chủ quản ở nước ngoài"
+        muc_nguon: "6.8"
+        dong_nguon: 2072
+        can_xac_minh: false
+      - tt: 8
+        ten: "NOI_DUNG"
+        the_xml: "NoiDung"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_NOI_DUNG_HOAT_DONG_TAI_VN"]
+        mo_ta: "Nội dung hoạt động tại Việt Nam"
+        muc_nguon: "6.8"
+        dong_nguon: 2075
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Nội dung hoạt động tại Việt Nam' (string 36) trùng ý nghĩa DM_NOI_DUNG_HOAT_DONG_TAI_VN nhưng không ghi 'theo danh mục'"
+  - ten: "_CANBO_TRINH_DO_TIENG_DT"
+    the_xml_danh_sach: "DanhSachCanboTrinhDoTiengDt"
+    the_xml_ban_ghi: "CanboTrinhDoTiengDt"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Trình độ tiếng dân tộc"
+    muc_nguon: "6.9"
+    dong_nguon: [2078, 2102]
+    so_truong_theo_spec: 8
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.9"
+        dong_nguon: 2085
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.9"
+        dong_nguon: 2087
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.9"
+        dong_nguon: 2090
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.9"
+        dong_nguon: 2093
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.9"
+        dong_nguon: 2095
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.9"
+        dong_nguon: 2097
+        can_xac_minh: false
+      - tt: 7
+        ten: "KHUNG_TRINH_DO"
+        the_xml: "KhungTrinhDo"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_KHUNG_NANG_LUC_NGOAI_NGU"]
+        mo_ta: "Khung trình độ năng lực ngoại ngữ"
+        muc_nguon: "6.9"
+        dong_nguon: 2099
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Khung trình độ năng lực ngoại ngữ' (string 36) trùng ý nghĩa DM_KHUNG_NANG_LUC_NGOAI_NGU nhưng không ghi 'theo danh mục'"
+      - tt: 8
+        ten: "TIENG_DAN_TOC"
+        the_xml: "TiengDanToc"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_TIENG_DAN_TOC"]
+        mo_ta: "Tiếng dân tộc"
+        muc_nguon: "6.9"
+        dong_nguon: 2102
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Tiếng dân tộc' (string 36) trùng ý nghĩa DM_TIENG_DAN_TOC nhưng không ghi 'theo danh mục'"
+  - ten: "_CANBO_HOSO_BOIDUONGTH"
+    the_xml_danh_sach: "DanhSachCanboHosoBoiduongth"
+    the_xml_ban_ghi: "CanboHosoBoiduongth"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Khóa bồi dưỡng tập huấn"
+    muc_nguon: "6.10"
+    dong_nguon: [2104, 2144]
+    so_truong_theo_spec: 15
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.10"
+        dong_nguon: 2110
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.10"
+        dong_nguon: 2112
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.10"
+        dong_nguon: 2115
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.10"
+        dong_nguon: 2118
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.10"
+        dong_nguon: 2120
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.10"
+        dong_nguon: 2122
+        can_xac_minh: false
+      - tt: 7
+        ten: "TEN_KHOA"
+        the_xml: "TenKhoa"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 5000
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Tên khóa bồi dưỡng tập huấn"
+        muc_nguon: "6.10"
+        dong_nguon: 2124
+        can_xac_minh: false
+      - tt: 8
+        ten: "CHUNG_CHI"
+        the_xml: "ChungChi"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 2550
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Chứng chỉ"
+        muc_nguon: "6.10"
+        dong_nguon: 2126
+        can_xac_minh: true
+        ly_do_xac_minh: "độ dài 2550 bất thường (LOAI_BOI_DUONG là 255); nghi nhầm 255, không được tự sửa"
+      - tt: 9
+        ten: "LOAI_BOI_DUONG"
+        the_xml: "LoaiBoiDuong"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 255
+        bat_buoc: true
+        danh_muc: "DM_LOAI_BOI_DUONG"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Loại bồi dưỡng theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.10"
+        dong_nguon: 2128
+        can_xac_minh: false
+      - tt: 10
+        ten: "DIA_DIEM_TO_CHUC"
+        the_xml: "DiaDiemToChuc"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 5000
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Địa điểm tổ chức"
+        muc_nguon: "6.10"
+        dong_nguon: 2131
+        can_xac_minh: false
+      - tt: 11
+        ten: "DON_VI_TO_CHUC"
+        the_xml: "DonViToChuc"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 2550
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Đơn vị tổ chức"
+        muc_nguon: "6.10"
+        dong_nguon: 2133
+        can_xac_minh: true
+        ly_do_xac_minh: "độ dài 2550 bất thường; nghi nhầm 255, không được tự sửa"
+      - tt: 12
+        ten: "NGUON_KINH_PHI"
+        the_xml: "NguonKinhPhi"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 2550
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Nguồn kinh phí"
+        muc_nguon: "6.10"
+        dong_nguon: 2135
+        can_xac_minh: true
+        ly_do_xac_minh: "độ dài 2550 bất thường; nghi nhầm 255, không được tự sửa"
+      - tt: 13
+        ten: "NGAY_CAP"
+        the_xml: "NgayCap"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày cấp chứng chỉ"
+        muc_nguon: "6.10"
+        dong_nguon: 2137
+        can_xac_minh: false
+      - tt: 14
+        ten: "THOI_GIAN_BAT_DAU"
+        the_xml: "ThoiGianBatDau"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Thời gian bắt đầu"
+        muc_nguon: "6.10"
+        dong_nguon: 2140
+        can_xac_minh: false
+      - tt: 15
+        ten: "THOI_GIAN_KET_THUC"
+        the_xml: "ThoiGianKetThuc"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Thời gian kết thúc"
+        muc_nguon: "6.10"
+        dong_nguon: 2143
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_DANHGIA_90"
+    the_xml_danh_sach: "DanhSachCanboHosoDanhgia90"
+    the_xml_ban_ghi: "CanboHosoDanhgia90"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Đánh giá cán bộ theo Nghị định 56/90"
+    muc_nguon: "6.11"
+    dong_nguon: [2146, 2169]
+    so_truong_theo_spec: 8
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.11"
+        dong_nguon: 2153
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.11"
+        dong_nguon: 2155
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.11"
+        dong_nguon: 2158
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.11"
+        dong_nguon: 2161
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.11"
+        dong_nguon: 2163
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.11"
+        dong_nguon: 2165
+        can_xac_minh: false
+      - tt: 7
+        ten: "NAM_DG"
+        the_xml: "NamDg"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Năm đánh giá"
+        muc_nguon: "6.11"
+        dong_nguon: 2167
+        can_xac_minh: false
+      - tt: 8
+        ten: "KET_QUA_DG"
+        the_xml: "KetQuaDg"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_DANH_GIA_CCVC", "DM_DANH_GIA_KQ"]
+        mo_ta: "Kết quả đánh giá"
+        muc_nguon: "6.11"
+        dong_nguon: 2169
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Kết quả đánh giá' (string 36) có thể là một trong hai danh mục đánh giá; spec không nói"
+  - ten: "_CANBO_HOSO_DBLUONG"
+    the_xml_danh_sach: "DanhSachCanboHosoDbluong"
+    the_xml_ban_ghi: "CanboHosoDbluong"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Diễn biến lương"
+    muc_nguon: "6.12"
+    dong_nguon: [2171, 2201]
+    so_truong_theo_spec: 11
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.12"
+        dong_nguon: 2175
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.12"
+        dong_nguon: 2177
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.12"
+        dong_nguon: 2180
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.12"
+        dong_nguon: 2183
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.12"
+        dong_nguon: 2185
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.12"
+        dong_nguon: 2187
+        can_xac_minh: false
+      - tt: 7
+        ten: "THANG_NAM"
+        the_xml: "ThangNam"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Tháng/năm"
+        muc_nguon: "6.12"
+        dong_nguon: 2189
+        can_xac_minh: false
+      - tt: 8
+        ten: "TRINH_DO_ID"
+        the_xml: "TrinhDoId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_TRINH_DO"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Trình độ theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.12"
+        dong_nguon: 2192
+        can_xac_minh: false
+      - tt: 9
+        ten: "BAC_LUONG_ID"
+        the_xml: "BacLuongId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_BAC_LUONG"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Bậc lương theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.12"
+        dong_nguon: 2195
+        can_xac_minh: false
+      - tt: 10
+        ten: "HE_SO_LUONG"
+        the_xml: "HeSoLuong"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_HE_SO_LUONG"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Hệ số lương theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.12"
+        dong_nguon: 2198
+        can_xac_minh: false
+      - tt: 11
+        ten: "MUC_LUONG"
+        the_xml: "MucLuong"
+        kieu: "double"
+        kieu_spec: "double"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Mức lương"
+        muc_nguon: "6.12"
+        dong_nguon: 2201
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_DTCHINHSACH"
+    the_xml_danh_sach: "DanhSachCanboHosoDtchinhsach"
+    the_xml_ban_ghi: "CanboHosoDtchinhsach"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Đối tượng chính sách"
+    muc_nguon: "6.13"
+    dong_nguon: [2203, 2233]
+    so_truong_theo_spec: 9
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.13"
+        dong_nguon: 2208
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.13"
+        dong_nguon: 2210
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.13"
+        dong_nguon: 2213
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.13"
+        dong_nguon: 2220
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.13"
+        dong_nguon: 2222
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.13"
+        dong_nguon: 2224
+        can_xac_minh: false
+      - tt: 7
+        ten: "DT_CHINH_SACH_ID"
+        the_xml: "DtChinhSachId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_DOI_TUONG_CHINH_SACH"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Đối tượng chính sách theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.13"
+        dong_nguon: 2226
+        can_xac_minh: false
+      - tt: 8
+        ten: "TU_NGAY"
+        the_xml: "TuNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Từ ngày"
+        muc_nguon: "6.13"
+        dong_nguon: 2229
+        can_xac_minh: false
+      - tt: 9
+        ten: "DEN_NGAY"
+        the_xml: "DenNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Đến ngày"
+        muc_nguon: "6.13"
+        dong_nguon: 2232
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_HD_NVSHV"
+    the_xml_danh_sach: "DanhSachCanboHosoHdNvshv"
+    the_xml_ban_ghi: "CanboHosoHdNvshv"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Hướng dẫn NCS/học viên"
+    muc_nguon: "6.14"
+    dong_nguon: [2235, 2279]
+    so_truong_theo_spec: 12
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.14"
+        dong_nguon: 2241
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.14"
+        dong_nguon: 2243
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.14"
+        dong_nguon: 2248
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.14"
+        dong_nguon: 2253
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.14"
+        dong_nguon: 2255
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.14"
+        dong_nguon: 2257
+        can_xac_minh: false
+      - tt: 7
+        ten: "HOC_VIEN_ID"
+        the_xml: "HocVienId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Họ tên NCS/học viên"
+        muc_nguon: "6.14"
+        dong_nguon: 2259
+        can_xac_minh: true
+        ly_do_xac_minh: "tên *_ID (string 36) nhưng mô tả 'Họ tên NCS/học viên'; không rõ là Id hay họ tên"
+      - tt: 8
+        ten: "CMTND"
+        the_xml: "Cmtnd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "CCCD/ Hộ chiếu người học"
+        muc_nguon: "6.14"
+        dong_nguon: 2261
+        can_xac_minh: false
+      - tt: 9
+        ten: "DOI_TUONG"
+        the_xml: "DoiTuong"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 250
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đối tượng: 0: Sinh viên; 1: Nghiên cứu sinh, cao học"
+        muc_nguon: "6.14"
+        dong_nguon: 2265
+        can_xac_minh: true
+        ly_do_xac_minh: "string 250 nhưng giá trị là mã 0/1 (0: Sinh viên, 1: Nghiên cứu sinh, cao học)"
+      - tt: 10
+        ten: "TRACH_NHIEM_HUONG_DAN"
+        the_xml: "TrachNhiemHuongDan"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 300
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Trách nhiệm hướng dẫn"
+        muc_nguon: "6.14"
+        dong_nguon: 2269
+        can_xac_minh: false
+      - tt: 11
+        ten: "TG_BAT_DAU"
+        the_xml: "TgBatDau"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Thời gian bắt đầu"
+        muc_nguon: "6.14"
+        dong_nguon: 2271
+        can_xac_minh: false
+      - tt: 12
+        ten: "TG_KET_THUC"
+        the_xml: "TgKetThuc"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Thời gian kết thúc"
+        muc_nguon: "6.14"
+        dong_nguon: 2276
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_HOC_HAM"
+    the_xml_danh_sach: "DanhSachCanboHosoHocHam"
+    the_xml_ban_ghi: "CanboHosoHocHam"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Học hàm"
+    muc_nguon: "6.15"
+    dong_nguon: [2281, 2313]
+    so_truong_theo_spec: 10
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.15"
+        dong_nguon: 2285
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.15"
+        dong_nguon: 2290
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.15"
+        dong_nguon: 2293
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.15"
+        dong_nguon: 2296
+        can_xac_minh: true
+        ly_do_xac_minh: "spec ghi string 36; các mảng khác ghi Guid 36 cho cùng tên trường"
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.15"
+        dong_nguon: 2298
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.15"
+        dong_nguon: 2300
+        can_xac_minh: false
+      - tt: 7
+        ten: "HOC_HAM_ID"
+        the_xml: "HocHamId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_HOC_HAM"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Học hàm theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.15"
+        dong_nguon: 2302
+        can_xac_minh: false
+      - tt: 8
+        ten: "LOAI_QD_ID"
+        the_xml: "LoaiQdId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_LOAI_QUYET_DINH", "DM_CO_QUAN_BAN_HANH"]
+        mo_ta: "Thẩm quyền quyết định theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.15"
+        dong_nguon: 2305
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Thẩm quyền quyết định theo danh mục HEMIS' không khớp rõ tên nào trong bảng 2.4"
+      - tt: 9
+        ten: "SO_QD"
+        the_xml: "SoQd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số quyết định"
+        muc_nguon: "6.15"
+        dong_nguon: 2310
+        can_xac_minh: false
+      - tt: 10
+        ten: "NGAY_QD"
+        the_xml: "NgayQd"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày quyết định"
+        muc_nguon: "6.15"
+        dong_nguon: 2312
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_HOPDONG"
+    the_xml_danh_sach: "DanhSachCanboHosoHopdong"
+    the_xml_ban_ghi: "CanboHosoHopdong"
+    the_xml_can_xac_minh: false
+    the_xml_nguon: "vi_du_trong_spec: dòng 510-511, 548-557"
+    mo_ta: "Hợp đồng lao động"
+    muc_nguon: "6.16"
+    dong_nguon: [2315, 2359]
+    so_truong_theo_spec: 15
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.16"
+        dong_nguon: 2320
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.16"
+        dong_nguon: 2322
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.16"
+        dong_nguon: 2325
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cơ sở giáo dục"
+        muc_nguon: "6.16"
+        dong_nguon: 2328
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.16"
+        dong_nguon: 2330
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.16"
+        dong_nguon: 2332
+        can_xac_minh: false
+      - tt: 7
+        ten: "LOAI_HOP_DONG"
+        the_xml: "LoaiHopDong"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_LOAI_HOP_DONG"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Loại hợp đồng theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.16"
+        dong_nguon: 2334
+        can_xac_minh: false
+      - tt: 8
+        ten: "SO_HOP_DONG"
+        the_xml: "SoHopDong"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số hợp đồng"
+        muc_nguon: "6.16"
+        dong_nguon: 2337
+        can_xac_minh: false
+      - tt: 9
+        ten: "SO_QUYET_DINH"
+        the_xml: "SoQuyetDinh"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số quyết định"
+        muc_nguon: "6.16"
+        dong_nguon: 2339
+        can_xac_minh: false
+      - tt: 10
+        ten: "NGAY_QUYET_DINH"
+        the_xml: "NgayQuyetDinh"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày quyết định"
+        muc_nguon: "6.16"
+        dong_nguon: 2341
+        can_xac_minh: false
+      - tt: 11
+        ten: "TU_NGAY"
+        the_xml: "TuNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày bắt đầu"
+        muc_nguon: "6.16"
+        dong_nguon: 2344
+        can_xac_minh: false
+      - tt: 12
+        ten: "DEN_NGAY"
+        the_xml: "DenNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày kết thúc"
+        muc_nguon: "6.16"
+        dong_nguon: 2347
+        can_xac_minh: false
+      - tt: 13
+        ten: "TOAN_THOI_GIAN"
+        the_xml: "ToanThoiGian"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Hợp đồng toàn thời gian"
+        muc_nguon: "6.16"
+        dong_nguon: 2350
+        can_xac_minh: false
+      - tt: 14
+        ten: "TRANG_THAI"
+        the_xml: "TrangThai"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_TRANG_THAI_HOP_DONG"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Trạng thái hợp đồng theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.16"
+        dong_nguon: 2352
+        can_xac_minh: false
+      - tt: 15
+        ten: "TEN_TO_CHUC_KHCN"
+        the_xml: "TenToChucKhcn"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 500
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Tên tổ chức khoa học công nghệ"
+        muc_nguon: "6.16"
+        dong_nguon: 2358
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_HOPDONG_THINHGIANG"
+    the_xml_danh_sach: "DanhSachCanboHosoHopdongThinhgiang"
+    the_xml_ban_ghi: "CanboHosoHopdongThinhgiang"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Hợp đồng thỉnh giảng"
+    muc_nguon: "6.17"
+    dong_nguon: [2361, 2398]
+    so_truong_theo_spec: 14
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.17"
+        dong_nguon: 2366
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.17"
+        dong_nguon: 2368
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.17"
+        dong_nguon: 2371
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cơ sở giáo dục"
+        muc_nguon: "6.17"
+        dong_nguon: 2374
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.17"
+        dong_nguon: 2376
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.17"
+        dong_nguon: 2378
+        can_xac_minh: false
+      - tt: 7
+        ten: "SO_HOP_DONG"
+        the_xml: "SoHopDong"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số hợp đồng"
+        muc_nguon: "6.17"
+        dong_nguon: 2380
+        can_xac_minh: false
+      - tt: 8
+        ten: "HD_TU_NGAY"
+        the_xml: "HdTuNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày ký hợp đồng – từ ngày"
+        muc_nguon: "6.17"
+        dong_nguon: 2382
+        can_xac_minh: false
+      - tt: 9
+        ten: "HD_DEN_NGAY"
+        the_xml: "HdDenNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày ký hợp đồng – đến ngày"
+        muc_nguon: "6.17"
+        dong_nguon: 2385
+        can_xac_minh: false
+      - tt: 10
+        ten: "SO_LD"
+        the_xml: "SoLd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 100
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Số sổ lao động"
+        muc_nguon: "6.17"
+        dong_nguon: 2388
+        can_xac_minh: false
+      - tt: 11
+        ten: "NGAY_CAP_LD"
+        the_xml: "NgayCapLd"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày cấp sổ lao động"
+        muc_nguon: "6.17"
+        dong_nguon: 2390
+        can_xac_minh: false
+      - tt: 12
+        ten: "NOI_CAP_LD"
+        the_xml: "NoiCapLd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 500
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Nơi cấp sổ lao động"
+        muc_nguon: "6.17"
+        dong_nguon: 2393
+        can_xac_minh: false
+      - tt: 13
+        ten: "TRANG_THAI"
+        the_xml: "TrangThai"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_TRANG_THAI_HOP_DONG"]
+        mo_ta: "Trạng thái theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.17"
+        dong_nguon: 2395
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Trạng thái theo danh mục HEMIS' không nêu tên danh mục"
+      - tt: 14
+        ten: "TY_LE_THOI_GIAN"
+        the_xml: "TyLeThoiGian"
+        kieu: "double"
+        kieu_spec: "double"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Tỷ lệ thời gian"
+        muc_nguon: "6.17"
+        dong_nguon: 2398
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_KHENTHUONG"
+    the_xml_danh_sach: "DanhSachCanboHosoKhenthuong"
+    the_xml_ban_ghi: "CanboHosoKhenthuong"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Khen thưởng"
+    muc_nguon: "6.18"
+    dong_nguon: [2400, 2452]
+    so_truong_theo_spec: 12
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.18"
+        dong_nguon: 2405
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.18"
+        dong_nguon: 2407
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.18"
+        dong_nguon: 2410
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.18"
+        dong_nguon: 2413
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.18"
+        dong_nguon: 2415
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.18"
+        dong_nguon: 2417
+        can_xac_minh: false
+      - tt: 7
+        ten: "NAM"
+        the_xml: "Nam"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Năm khen thưởng"
+        muc_nguon: "6.18"
+        dong_nguon: 2419
+        can_xac_minh: false
+      - tt: 8
+        ten: "SO_QUYET_DINH"
+        the_xml: "SoQuyetDinh"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số quyết định"
+        muc_nguon: "6.18"
+        dong_nguon: 2421
+        can_xac_minh: false
+      - tt: 9
+        ten: "PHUONG_THUC_KHEN_THUONG_ID"
+        the_xml: "PhuongThucKhenThuongId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_PHUONG_THUC_KHEN_THUONG"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Phương thức khen thưởng theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.18"
+        dong_nguon: 2427
+        can_xac_minh: false
+      - tt: 10
+        ten: "CAP_KHEN_THUONG_ID"
+        the_xml: "CapKhenThuongId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_CAP_KHEN_THUONG"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Cấp khen thưởng theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.18"
+        dong_nguon: 2432
+        can_xac_minh: false
+      - tt: 11
+        ten: "DANH_HIEU_THI_DUA_ID"
+        the_xml: "DanhHieuThiDuaId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        danh_muc_theo_dieu_kien: {"theo_truong": "PHAN_LOAI", "1": "DM_DANH_HIEU_THI_DUA", "2": "DM_DANH_HIEU_VD_VA_GTNN", "3": "DM_HINH_THUC_KHEN_THUONG"}
+        mo_ta: "Danh hiệu thi đua: tham chiếu 1 trong 3 danh mục Danh hiệu thi đua / Danh hiệu vinh dự và giải thưởng nhà nước / Hình thức khen thưởng, tương ứng với giá trị PHAN_LOAI"
+        muc_nguon: "6.18"
+        dong_nguon: 2435
+        can_xac_minh: false
+      - tt: 12
+        ten: "PHAN_LOAI"
+        the_xml: "PhanLoai"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Phân loại: 1 – Danh hiệu thi đua; 2 – Danh hiệu vinh dự và giải thưởng nhà nước; 3 - Hình thức khen thưởng"
+        muc_nguon: "6.18"
+        dong_nguon: 2448
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_KYLUAT"
+    the_xml_danh_sach: "DanhSachCanboHosoKyluat"
+    the_xml_ban_ghi: "CanboHosoKyluat"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Kỷ luật"
+    muc_nguon: "6.19"
+    dong_nguon: [2454, 2484]
+    so_truong_theo_spec: 12
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.19"
+        dong_nguon: 2458
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.19"
+        dong_nguon: 2460
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.19"
+        dong_nguon: 2463
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.19"
+        dong_nguon: 2466
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.19"
+        dong_nguon: 2468
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.19"
+        dong_nguon: 2470
+        can_xac_minh: false
+      - tt: 7
+        ten: "NAM"
+        the_xml: "Nam"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Năm bị kỷ luật"
+        muc_nguon: "6.19"
+        dong_nguon: 2472
+        can_xac_minh: false
+      - tt: 8
+        ten: "LOAI_KY_LUAT_ID"
+        the_xml: "LoaiKyLuatId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_LOAI_KY_LUAT"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Loại kỷ luật theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.19"
+        dong_nguon: 2474
+        can_xac_minh: false
+      - tt: 9
+        ten: "CAP_QUYET_DINH"
+        the_xml: "CapQuyetDinh"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 200
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cấp quyết định"
+        muc_nguon: "6.19"
+        dong_nguon: 2477
+        can_xac_minh: false
+      - tt: 10
+        ten: "SO_QUYET_DINH"
+        the_xml: "SoQuyetDinh"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số quyết định"
+        muc_nguon: "6.19"
+        dong_nguon: 2479
+        can_xac_minh: false
+      - tt: 11
+        ten: "NGAY_QUYET_DINH"
+        the_xml: "NgayQuyetDinh"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày quyết định"
+        muc_nguon: "6.19"
+        dong_nguon: 2481
+        can_xac_minh: false
+      - tt: 12
+        ten: "LY_DO"
+        the_xml: "LyDo"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 500
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Lý do"
+        muc_nguon: "6.19"
+        dong_nguon: 2484
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_LINHVUCNC"
+    the_xml_danh_sach: "DanhSachCanboHosoLinhvucnc"
+    the_xml_ban_ghi: "CanboHosoLinhvucnc"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Lĩnh vực nghiên cứu"
+    muc_nguon: "6.20"
+    dong_nguon: [2486, 2513]
+    so_truong_theo_spec: 9
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.20"
+        dong_nguon: 2493
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.20"
+        dong_nguon: 2495
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.20"
+        dong_nguon: 2498
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.20"
+        dong_nguon: 2501
+        can_xac_minh: true
+        ly_do_xac_minh: "spec ghi string 36; các mảng khác ghi Guid 36 cho cùng tên trường"
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.20"
+        dong_nguon: 2503
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.20"
+        dong_nguon: 2505
+        can_xac_minh: false
+      - tt: 7
+        ten: "LINH_VUC_ID"
+        the_xml: "LinhVucId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_LINH_VUC_NGHIEN_CUU"
+        danh_muc_co_so: "y_nghia"
+        mo_ta: "Lĩnh vực nghiên cứu theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.20"
+        dong_nguon: 2507
+        can_xac_minh: false
+      - tt: 8
+        ten: "NAM_NGHIEN_CUU"
+        the_xml: "NamNghienCuu"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 300
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Năm nghiên cứu"
+        muc_nguon: "6.20"
+        dong_nguon: 2510
+        can_xac_minh: false
+      - tt: 9
+        ten: "IS_CHUYEN_SAU"
+        the_xml: "IsChuyenSau"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Là lĩnh vực nghiên cứu chuyên sâu"
+        muc_nguon: "6.20"
+        dong_nguon: 2512
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_NGANH_DUNG_TEN"
+    the_xml_danh_sach: "DanhSachCanboHosoNganhDungTen"
+    the_xml_ban_ghi: "CanboHosoNganhDungTen"
+    the_xml_can_xac_minh: false
+    the_xml_nguon: "vi_du_trong_spec: dòng 511"
+    mo_ta: "Ngành đứng tên đào tạo"
+    muc_nguon: "6.21"
+    dong_nguon: [2515, 2539]
+    so_truong_theo_spec: 8
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.21"
+        dong_nguon: 2520
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.21"
+        dong_nguon: 2522
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.21"
+        dong_nguon: 2525
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.21"
+        dong_nguon: 2528
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.21"
+        dong_nguon: 2530
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.21"
+        dong_nguon: 2532
+        can_xac_minh: false
+      - tt: 7
+        ten: "NGANH_ID"
+        the_xml: "NganhId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 20
+        bat_buoc: true
+        danh_muc: "DM_NGANH"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Ngành đào tạo đứng tên theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.21"
+        dong_nguon: 2534
+        can_xac_minh: true
+        ly_do_xac_minh: "độ dài 20 (NGANH_ID ở _CANBO_HOSO_NGANHGD là 36, ở _CANBO_HOSO_QTDAOTAO là 200)"
+      - tt: 8
+        ten: "TRONG_SO"
+        the_xml: "TrongSo"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Trọng số"
+        muc_nguon: "6.21"
+        dong_nguon: 2539
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_NGANHGD"
+    the_xml_danh_sach: "DanhSachCanboHosoNganhgd"
+    the_xml_ban_ghi: "CanboHosoNganhgd"
+    the_xml_can_xac_minh: false
+    the_xml_nguon: "vi_du_trong_spec: dòng 512"
+    mo_ta: "Ngành giảng dạy"
+    muc_nguon: "6.22"
+    dong_nguon: [2541, 2576]
+    so_truong_theo_spec: 11
+    tt_thieu: [9]
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.22"
+        dong_nguon: 2546
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.22"
+        dong_nguon: 2548
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.22"
+        dong_nguon: 2553
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.22"
+        dong_nguon: 2562
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.22"
+        dong_nguon: 2564
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.22"
+        dong_nguon: 2566
+        can_xac_minh: false
+      - tt: 7
+        ten: "NGANH_ID"
+        the_xml: "NganhId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_NGANH"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Ngành giảng dạy theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.22"
+        dong_nguon: 2568
+        can_xac_minh: false
+      - tt: 8
+        ten: "TRINH_DO_ID"
+        the_xml: "TrinhDoId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_TRINH_DO", "DM_TRINH_DO_DAO_TAO"]
+        mo_ta: "Trình độ giảng dạy theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.22"
+        dong_nguon: 2571
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Trình độ giảng dạy theo danh mục HEMIS' không nêu tên danh mục"
+      - tt: 10
+        ten: "DON_VI_THINH_GIANG_ID"
+        the_xml: "DonViThinhGiangId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Đơn vị thỉnh giảng"
+        muc_nguon: "6.22"
+        dong_nguon: 2574
+        can_xac_minh: true
+        ly_do_xac_minh: "tên *_ID, string 36, mô tả 'Đơn vị thỉnh giảng'; không nêu nguồn tham chiếu (cùng tên ở _CANBO_HOSO_DONVITG là string 250)"
+      - tt: 11
+        ten: "IS_NGANH_CHINH"
+        the_xml: "IsNganhChinh"
+        kieu: "bool"
+        kieu_spec: "Đúng/Sai"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Là ngành chính"
+        muc_nguon: "6.22"
+        dong_nguon: 2576
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_PHUCAP"
+    the_xml_danh_sach: "DanhSachCanboHosoPhucap"
+    the_xml_ban_ghi: "CanboHosoPhucap"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Phụ cấp"
+    muc_nguon: "6.23"
+    dong_nguon: [2578, 2625]
+    so_truong_theo_spec: 16
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.23"
+        dong_nguon: 2583
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.23"
+        dong_nguon: 2585
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.23"
+        dong_nguon: 2590
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.23"
+        dong_nguon: 2595
+        can_xac_minh: false
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.23"
+        dong_nguon: 2597
+        can_xac_minh: true
+        ly_do_xac_minh: "cột Bắt buộc ghi 'xx' (ở cả hai bản); coi là bắt buộc nhưng đây có thể là lỗi gõ"
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.23"
+        dong_nguon: 2599
+        can_xac_minh: true
+        ly_do_xac_minh: "cột Bắt buộc để trống; mọi mảng con khác đánh x cho CCCD"
+      - tt: 7
+        ten: "NGAY_HUONG"
+        the_xml: "NgayHuong"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày hưởng"
+        muc_nguon: "6.23"
+        dong_nguon: 2601
+        can_xac_minh: false
+      - tt: 8
+        ten: "BAC_LUONG_ID"
+        the_xml: "BacLuongId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_BAC_LUONG"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Bậc lương theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.23"
+        dong_nguon: 2606
+        can_xac_minh: false
+      - tt: 9
+        ten: "HE_SO_LUONG"
+        the_xml: "HeSoLuong"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_HE_SO_LUONG"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Hệ số lương theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.23"
+        dong_nguon: 2609
+        can_xac_minh: false
+      - tt: 10
+        ten: "PHAN_TRAM_VUOT_KHUNG"
+        the_xml: "PhanTramVuotKhung"
+        kieu: "double"
+        kieu_spec: "double"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Phần trăm vượt khung"
+        muc_nguon: "6.23"
+        dong_nguon: 2612
+        can_xac_minh: false
+      - tt: 11
+        ten: "PHU_CAP_CHUC_VU"
+        the_xml: "PhuCapChucVu"
+        kieu: "double"
+        kieu_spec: "double"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Phụ cấp chức vụ"
+        muc_nguon: "6.23"
+        dong_nguon: 2614
+        can_xac_minh: false
+      - tt: 12
+        ten: "PHU_CAP_THAM_NIEN"
+        the_xml: "PhuCapThamNien"
+        kieu: "double"
+        kieu_spec: "double"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Phụ cấp thâm niên"
+        muc_nguon: "6.23"
+        dong_nguon: 2616
+        can_xac_minh: false
+      - tt: 13
+        ten: "PHU_CAP_UU_DAI_NGHE"
+        the_xml: "PhuCapUuDaiNghe"
+        kieu: "double"
+        kieu_spec: "double"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Phụ cấp ưu đãi nghề"
+        muc_nguon: "6.23"
+        dong_nguon: 2618
+        can_xac_minh: false
+      - tt: 14
+        ten: "PHU_CAP_THU_HUT_NGHE"
+        the_xml: "PhuCapThuHutNghe"
+        kieu: "double"
+        kieu_spec: "double"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Phụ cấp thu hút nghề"
+        muc_nguon: "6.23"
+        dong_nguon: 2620
+        can_xac_minh: false
+      - tt: 15
+        ten: "PHU_CAP_DOC_HAI"
+        the_xml: "PhuCapDocHai"
+        kieu: "double"
+        kieu_spec: "double"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Phụ cấp độc hại"
+        muc_nguon: "6.23"
+        dong_nguon: 2622
+        can_xac_minh: false
+      - tt: 16
+        ten: "PHU_CAP_KHAC"
+        the_xml: "PhuCapKhac"
+        kieu: "double"
+        kieu_spec: "double"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Phụ cấp khác"
+        muc_nguon: "6.23"
+        dong_nguon: 2624
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_QTCT"
+    the_xml_danh_sach: "DanhSachCanboHosoQtct"
+    the_xml_ban_ghi: "CanboHosoQtct"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Quá trình công tác"
+    muc_nguon: "6.24"
+    dong_nguon: [2627, 2658]
+    so_truong_theo_spec: 11
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.24"
+        dong_nguon: 2632
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.24"
+        dong_nguon: 2634
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.24"
+        dong_nguon: 2637
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.24"
+        dong_nguon: 2640
+        can_xac_minh: true
+        ly_do_xac_minh: "spec ghi string 36; các mảng khác ghi Guid 36 cho cùng tên trường"
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.24"
+        dong_nguon: 2642
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.24"
+        dong_nguon: 2644
+        can_xac_minh: false
+      - tt: 7
+        ten: "TU_NGAY"
+        the_xml: "TuNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Từ tháng năm"
+        muc_nguon: "6.24"
+        dong_nguon: 2646
+        can_xac_minh: false
+      - tt: 8
+        ten: "DEN_NGAY"
+        the_xml: "DenNgay"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Đến tháng năm"
+        muc_nguon: "6.24"
+        dong_nguon: 2649
+        can_xac_minh: false
+      - tt: 9
+        ten: "DON_VI_CONG_TAC"
+        the_xml: "DonViCongTac"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 255
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Đơn vị công tác"
+        muc_nguon: "6.24"
+        dong_nguon: 2652
+        can_xac_minh: false
+      - tt: 10
+        ten: "CHUC_DANH"
+        the_xml: "ChucDanh"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_CHUC_DANH"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Chức danh theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.24"
+        dong_nguon: 2654
+        can_xac_minh: false
+      - tt: 11
+        ten: "CHUC_VU"
+        the_xml: "ChucVu"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_CHUC_VU"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Chức vụ theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.24"
+        dong_nguon: 2657
+        can_xac_minh: false
+  - ten: "_CANBO_HOSO_QTDAOTAO"
+    the_xml_danh_sach: "DanhSachCanboHosoQtdaotao"
+    the_xml_ban_ghi: "CanboHosoQtdaotao"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Quá trình đào tạo"
+    muc_nguon: "6.25"
+    dong_nguon: [2660, 2705]
+    so_truong_theo_spec: 14
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.25"
+        dong_nguon: 2666
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.25"
+        dong_nguon: 2668
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.25"
+        dong_nguon: 2671
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Đơn vị"
+        muc_nguon: "6.25"
+        dong_nguon: 2674
+        can_xac_minh: true
+        ly_do_xac_minh: "spec ghi string 36; các mảng khác ghi Guid 36 cho cùng tên trường"
+      - tt: 5
+        ten: "CAN_BO_ID"
+        the_xml: "CanBoId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Cán bộ"
+        muc_nguon: "6.25"
+        dong_nguon: 2676
+        can_xac_minh: false
+      - tt: 6
+        ten: "CCCD"
+        the_xml: "Cccd"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Số CCCD/CMND cán bộ"
+        muc_nguon: "6.25"
+        dong_nguon: 2678
+        can_xac_minh: false
+      - tt: 7
+        ten: "NGANH_ID"
+        the_xml: "NganhId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 200
+        bat_buoc: false
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_CHUYEN_NGANH", "DM_NGANH", "DM_TRINH_DO_CHUYEN_MON"]
+        mo_ta: "Chuyên môn được đào tạo theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.25"
+        dong_nguon: 2680
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Chuyên môn được đào tạo theo danh mục HEMIS' nhưng tên trường là NGANH_ID; nhiều ứng viên; độ dài 200 (NGANH_ID ở _CANBO_HOSO_NGANHGD là 36, ở _CANBO_HOSO_NGANH_DUNG_TEN là 20)"
+      - tt: 8
+        ten: "TRINH_DO_ID"
+        the_xml: "TrinhDoId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: "DM_TRINH_DO"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Trình độ theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.25"
+        dong_nguon: 2684
+        can_xac_minh: false
+      - tt: 9
+        ten: "CO_SO_DAO_TAO"
+        the_xml: "CoSoDaoTao"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 500
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Cơ sở đào tạo"
+        muc_nguon: "6.25"
+        dong_nguon: 2687
+        can_xac_minh: false
+      - tt: 10
+        ten: "QUOC_GIA_ID"
+        the_xml: "QuocGiaId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_QUOC_TICH"]
+        mo_ta: "Nước đào tạo theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.25"
+        dong_nguon: 2689
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Nước đào tạo theo danh mục HEMIS' không nêu tên danh mục"
+      - tt: 11
+        ten: "LOAI_HINH_DAO_TAO"
+        the_xml: "LoaiHinhDaoTao"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: "DM_LOAI_HINH_DAO_TAO"
+        danh_muc_co_so: "ten_truong"
+        mo_ta: "Loại hình đào tạo theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.25"
+        dong_nguon: 2696
+        can_xac_minh: false
+      - tt: 12
+        ten: "THOI_GIAN_BAT_DAU"
+        the_xml: "ThoiGianBatDau"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Thời gian bắt đầu"
+        muc_nguon: "6.25"
+        dong_nguon: 2699
+        can_xac_minh: false
+      - tt: 13
+        ten: "THOI_GIAN_KET_THUC"
+        the_xml: "ThoiGianKetThuc"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Thời gian kết thúc"
+        muc_nguon: "6.25"
+        dong_nguon: 2702
+        can_xac_minh: false
+      - tt: 14
+        ten: "NAM_TOT_NGHIEP"
+        the_xml: "NamTotNghiep"
+        kieu: "int"
+        kieu_spec: "int"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Năm tốt nghiệp"
+        muc_nguon: "6.25"
+        dong_nguon: 2705
+        can_xac_minh: false
+  - ten: "_CO_CAU_TO_CHUC"
+    the_xml_danh_sach: "DanhSachCoCauToChuc"
+    the_xml_ban_ghi: "CoCauToChuc"
+    the_xml_can_xac_minh: true
+    the_xml_nguon: "suy ra: PascalCase từng token của tên mảng (khớp 4 ví dụ CanboHoso, CanboHosoHopdong, CanboHosoNganhDungTen, CanboHosoNganhgd ở dòng 510-512); mảng này không có ví dụ riêng trong spec"
+    mo_ta: "Cơ cấu tổ chức"
+    muc_nguon: "6.26"
+    dong_nguon: [2707, 2748]
+    so_truong_theo_spec: 13
+    tt_thieu: []
+    truong:
+      - tt: 1
+        ten: "Id"
+        the_xml: "Id"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Id bản ghi"
+        muc_nguon: "6.26"
+        dong_nguon: 2712
+        can_xac_minh: false
+      - tt: 2
+        ten: "Created"
+        the_xml: "Created"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày tạo bản ghi"
+        muc_nguon: "6.26"
+        dong_nguon: 2714
+        can_xac_minh: false
+      - tt: 3
+        ten: "Modified"
+        the_xml: "Modified"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Ngày cập nhật bản ghi gần nhất"
+        muc_nguon: "6.26"
+        dong_nguon: 2719
+        can_xac_minh: false
+      - tt: 4
+        ten: "DON_VI_ID"
+        the_xml: "DonViId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Trường (đơn vị chủ quản của cơ cấu tổ chức)"
+        muc_nguon: "6.26"
+        dong_nguon: 2724
+        can_xac_minh: false
+      - tt: 5
+        ten: "PARENT_ID"
+        the_xml: "ParentId"
+        kieu: "guid"
+        kieu_spec: "Guid"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "ID đơn vị cấp cha"
+        muc_nguon: "6.26"
+        dong_nguon: 2727
+        can_xac_minh: false
+      - tt: 6
+        ten: "MA_CAP_CHA"
+        the_xml: "MaCapCha"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Mã đơn vị cấp cha"
+        muc_nguon: "6.26"
+        dong_nguon: 2729
+        can_xac_minh: false
+      - tt: 7
+        ten: "MA_TO_CHUC_ID"
+        the_xml: "MaToChucId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 50
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Mã phòng ban/đơn vị"
+        muc_nguon: "6.26"
+        dong_nguon: 2731
+        can_xac_minh: false
+      - tt: 8
+        ten: "TEN_TO_CHUC"
+        the_xml: "TenToChuc"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 350
+        bat_buoc: true
+        danh_muc: null
+        mo_ta: "Tên phòng ban/đơn vị"
+        muc_nguon: "6.26"
+        dong_nguon: 2733
+        can_xac_minh: false
+      - tt: 9
+        ten: "LOAI_DON_VI_ID"
+        the_xml: "LoaiDonViId"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 36
+        bat_buoc: true
+        danh_muc: null
+        danh_muc_de_xuat: ["DM_LOAI_PHONG_BAN", "DM_PHAN_LOAI_CO_SO", "DM_LOAI_CO_SO"]
+        mo_ta: "Phân loại đơn vị theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.26"
+        dong_nguon: 2735
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Phân loại đơn vị theo danh mục HEMIS' không nêu tên danh mục"
+      - tt: 10
+        ten: "SO_QUYET_DINH"
+        the_xml: "SoQuyetDinh"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 500
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Số quyết định"
+        muc_nguon: "6.26"
+        dong_nguon: 2738
+        can_xac_minh: false
+      - tt: 11
+        ten: "NGAY_RA_QD"
+        the_xml: "NgayRaQd"
+        kieu: "date"
+        kieu_spec: "Datetime (yyyy-MM-dd)"
+        do_dai: null
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Ngày ra quyết định"
+        muc_nguon: "6.26"
+        dong_nguon: 2740
+        can_xac_minh: false
+      - tt: 12
+        ten: "TRANG_THAI"
+        the_xml: "TrangThai"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 30
+        bat_buoc: true
+        danh_muc: null
+        danh_muc_de_xuat: []
+        mo_ta: "Trạng thái theo danh mục HEMIS (mã danh mục)"
+        muc_nguon: "6.26"
+        dong_nguon: 2745
+        can_xac_minh: true
+        ly_do_xac_minh: "mô tả 'Trạng thái theo danh mục HEMIS' không nêu tên danh mục; bảng 2.4 không có danh mục trạng thái đơn vị"
+      - tt: 13
+        ten: "MA_DINH_DANH_DIEN_TU"
+        the_xml: "MaDinhDanhDienTu"
+        kieu: "string"
+        kieu_spec: "string"
+        do_dai: 100
+        bat_buoc: false
+        danh_muc: null
+        mo_ta: "Mã định danh điện tử"
+        muc_nguon: "6.26"
+        dong_nguon: 2748
+        can_xac_minh: false
