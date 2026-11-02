@@ -138,17 +138,17 @@ Chạy `./mvnw test` trước mỗi lần gửi thật.
 
 ## 7. Tình trạng hiện tại
 
-| Thành phần                        | Trạng thái                                            |
-| --------------------------------- | ----------------------------------------------------- |
-| Lấy token, tự làm mới             | Xong                                                  |
-| Tải danh mục dùng chung           | Xong (chưa lưu vào bảng `catalog_hemis`)              |
-| Sinh XML đúng cấu trúc k1/k2      | Xong, có kiểm thử                                     |
-| Tự xác minh chữ ký XML-DSig       | Xong                                                  |
-| Hàng đợi ký số + API cho tác nhân | Xong                                                  |
-| Gửi db16 và dbN, ghi nhật ký      | Xong                                                  |
-| Trích xuất COSOGIAODUC            | Khung, đọc từ cấu hình — **cần nối với schema `dwh`** |
-| Bộ quy tắc kiểm tra dữ liệu       | **Chưa làm**                                          |
-| Tác nhân ký số trên Windows       | **Chưa làm** — xem `docs/02_KY_SO_XML_DSIG.md`        |
-| Màn hình theo dõi                 | Mới có API, chưa có giao diện                         |
+| Thành phần                        | Trạng thái                                                                                                                                  |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Lấy token, tự làm mới             | Xong                                                                                                                                        |
+| Tải danh mục dùng chung           | Xong (chưa lưu vào bảng `catalog_hemis`)                                                                                                    |
+| Sinh XML đúng cấu trúc k1/k2      | Xong, có kiểm thử                                                                                                                           |
+| Tự xác minh chữ ký XML-DSig       | Xong                                                                                                                                        |
+| Hàng đợi ký số + API cho tác nhân | Xong                                                                                                                                        |
+| Gửi db16 và dbN, ghi nhật ký      | Xong                                                                                                                                        |
+| Trích xuất COSOGIAODUC            | Khung, đọc từ cấu hình — **cần nối với schema `dwh`**                                                                                       |
+| Bộ quy tắc kiểm tra dữ liệu       | **Chưa làm**                                                                                                                                |
+| Tác nhân ký số trên Windows       | **Chưa làm** — xem `docs/02_KY_SO_XML_DSIG.md`                                                                                              |
+| Màn hình theo dõi                 | Có API danh sách đợt, chi tiết, nhật ký. Chưa có danh sách lỗi, tải tệp, và chưa có giao diện — xem `docs/12_HUONG_DAN_QUAN_TRI_DONG_BO.md` |
 
 Kế hoạch chi tiết: `../plan/PA_Ky_thuat_GD1_Ket_noi_API_HEMIS.docx`
