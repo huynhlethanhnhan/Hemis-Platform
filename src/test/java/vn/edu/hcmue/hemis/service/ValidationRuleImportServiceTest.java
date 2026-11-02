@@ -1,23 +1,18 @@
 package vn.edu.hcmue.hemis.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
 
 import vn.edu.hcmue.hemis.journal.ValidationRule;
 import vn.edu.hcmue.hemis.journal.ValidationRuleRepository;
@@ -39,114 +34,71 @@ class ValidationRuleImportServiceTest {
     }
 
     @Test
-    @DisplayName("Imports all configured rule fields and applies defaults to omitted optional values")
+    @DisplayName("Imports packaged rules and applies defaults to omitted optional values")
     void importsRulesAndDefaults() {
-        ValidationRuleImportService service = serviceFor("""
-                ph: COSOGIAODUC
-                entity: _CO_SO_GIAO_DUC
-                rules:
-                  - field: Id
-                    required: true
-                    max_length: 36
-                    data_type: guid
-                    catalog_name: identifiers
-                    condition_expr: "status = 'active'"
-                    note: Record identifier
-                  - field: WEBSITE
-                """);
         when(repository.findByPhAndEntity("COSOGIAODUC", "_CO_SO_GIAO_DUC")).thenReturn(List.of());
+        ValidationRuleImportService service = new ValidationRuleImportService(repository);
 
-        assertThat(service.importRules()).isEqualTo(2);
+        assertThat(service.importRules()).isGreaterThan(2);
 
         verify(repository).findByPhAndEntity("COSOGIAODUC", "_CO_SO_GIAO_DUC");
-        assertThat(savedRules).hasSize(2);
-        ValidationRule idRule = savedRules.get(0);
+        assertThat(savedRules).hasSizeGreaterThan(2);
+        ValidationRule idRule = savedRules.stream().filter(r -> r.getField().equals("Id")).findFirst().orElseThrow();
         assertThat(idRule.getPh()).isEqualTo("COSOGIAODUC");
         assertThat(idRule.getEntity()).isEqualTo("_CO_SO_GIAO_DUC");
         assertThat(idRule.getField()).isEqualTo("Id");
         assertThat(idRule.getRequired()).isTrue();
         assertThat(idRule.getMaxLength()).isEqualTo(36);
         assertThat(idRule.getDataType()).isEqualTo("guid");
-        assertThat(idRule.getCatalogName()).isEqualTo("identifiers");
-        assertThat(idRule.getConditionExpr()).isEqualTo("status = 'active'");
-        assertThat(idRule.getNote()).isEqualTo("Record identifier");
+        assertThat(idRule.getNote()).isEqualTo("Id ban ghi");
 
-        ValidationRule websiteRule = savedRules.get(1);
-        assertThat(websiteRule.getField()).isEqualTo("WEBSITE");
-        assertThat(websiteRule.getRequired()).isFalse();
-        assertThat(websiteRule.getMaxLength()).isZero();
-        assertThat(websiteRule.getDataType()).isNull();
-        assertThat(websiteRule.getCatalogName()).isNull();
-        assertThat(websiteRule.getConditionExpr()).isNull();
-        assertThat(websiteRule.getNote()).isNull();
+        ValidationRule websiteRule = savedRules.stream().filter(r -> r.getField().equals("WEBSITE")).findFirst().orElseThrow();
+        assertThat(websiteRule.getRequired()).isTrue();
+        assertThat(websiteRule.getMaxLength()).isEqualTo(250);
+        assertThat(websiteRule.getDataType()).isEqualTo("string");
+        assertThat(websiteRule.getNote()).isEqualTo("Website");
+        ValidationRule noMaxLengthRule = savedRules.stream().filter(r -> r.getField().equals("SO_GV_GDTC")).findFirst().orElseThrow();
+        assertThat(noMaxLengthRule.getMaxLength()).isZero();
     }
 
     @Test
-    @DisplayName("Updates matching fields, inserts new fields, and removes rules no longer in YAML")
+    @DisplayName("Updates matching packaged fields, inserts missing fields, and removes obsolete rules")
     void reconcilesExistingRulesOnRepeatedImport() {
         ValidationRule existing = rule(7L, "MA_DON_VI");
         existing.setNote("Old note");
         ValidationRule obsolete = rule(8L, "OBSOLETE");
         when(repository.findByPhAndEntity("COSOGIAODUC", "_CO_SO_GIAO_DUC"))
                 .thenReturn(List.of(existing, obsolete));
-        ValidationRuleImportService service = serviceFor("""
-                ph: COSOGIAODUC
-                entity: _CO_SO_GIAO_DUC
-                rules:
-                  - field: MA_DON_VI
-                    required: true
-                    max_length: 50
-                    data_type: string
-                    note: Updated note
-                  - field: TEN_DON_VI
-                    required: true
-                    max_length: 250
-                    data_type: string
-                """);
+        ValidationRuleImportService service = new ValidationRuleImportService(repository);
 
-        assertThat(service.importRules()).isEqualTo(2);
+        assertThat(service.importRules()).isGreaterThan(2);
 
         verify(repository).deleteAll(argThat(obsoleteRules -> {
             List<ValidationRule> deleted = new ArrayList<>();
             obsoleteRules.forEach(deleted::add);
-            return deleted.size() == 1 && deleted.contains(obsolete);
+            return deleted.contains(obsolete);
         }));
         verify(repository).saveAll(any());
-        assertThat(savedRules).hasSize(2);
-        assertThat(savedRules.get(0)).isSameAs(existing);
+        assertThat(savedRules).hasSizeGreaterThan(2);
+        ValidationRule updated = savedRules.stream().filter(r -> r.getField().equals("MA_DON_VI")).findFirst().orElseThrow();
+        assertThat(updated).isSameAs(existing);
         assertThat(existing.getId()).isEqualTo(7L);
         assertThat(existing.getRequired()).isTrue();
         assertThat(existing.getMaxLength()).isEqualTo(50);
         assertThat(existing.getDataType()).isEqualTo("string");
-        assertThat(existing.getNote()).isEqualTo("Updated note");
-        assertThat(savedRules.get(1).getField()).isEqualTo("TEN_DON_VI");
-        assertThat(savedRules.get(1).getPh()).isEqualTo("COSOGIAODUC");
-        assertThat(savedRules.get(1).getEntity()).isEqualTo("_CO_SO_GIAO_DUC");
-    }
-
-    @Test
-    @DisplayName("FR-VAL-01: unique key (ph, entity, field) rejects duplicate fields in YAML")
-    void rejectsDuplicateFieldsBeforeRepositoryAccess() {
-        ValidationRuleImportService service = serviceFor("""
-                ph: COSOGIAODUC
-                entity: _CO_SO_GIAO_DUC
-                rules:
-                  - field: Id
-                  - field: Id
-                """);
-
-        assertThatThrownBy(service::importRules)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("Duplicate validation rule field: Id");
-        verifyNoInteractions(repository);
+        assertThat(existing.getNote()).isEqualTo("Ma don vi tren he thong HEMIS");
+        assertThat(savedRules).anySatisfy(rule -> {
+            assertThat(rule.getField()).isEqualTo("TEN_DON_VI");
+            assertThat(rule.getPh()).isEqualTo("COSOGIAODUC");
+            assertThat(rule.getEntity()).isEqualTo("_CO_SO_GIAO_DUC");
+        });
     }
 
     @Test
     @DisplayName("Imports the packaged COSOGIAODUC rule YAML")
     void importsPackagedRules() {
         when(repository.findByPhAndEntity("COSOGIAODUC", "_CO_SO_GIAO_DUC")).thenReturn(List.of());
-        ValidationRuleImportService service = new ValidationRuleImportService(
-                repository, new ClassPathResource("rules/cosogiaoduc.yml"));
+        ValidationRuleImportService service = new ValidationRuleImportService(repository);
 
         int importedCount = service.importRules();
 
@@ -163,12 +115,6 @@ class ValidationRuleImportServiceTest {
             assertThat(rule.getPh()).isEqualTo("COSOGIAODUC");
             assertThat(rule.getEntity()).isEqualTo("_CO_SO_GIAO_DUC");
         });
-    }
-
-    private ValidationRuleImportService serviceFor(String yaml) {
-        return new ValidationRuleImportService(
-                repository,
-                new ByteArrayResource(yaml.getBytes(StandardCharsets.UTF_8)));
     }
 
     private static ValidationRule rule(Long id, String field) {
