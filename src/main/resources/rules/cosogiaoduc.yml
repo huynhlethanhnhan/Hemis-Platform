@@ -198,7 +198,7 @@ rules:
   - tt: 31
     field: TRUONG_DAC_THU
     required: true
-    data_type: date
+    data_type: bool
     note: Dao tao nganh dac thu
 
   - tt: 32
